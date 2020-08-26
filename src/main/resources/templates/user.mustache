@@ -235,7 +235,7 @@
                 <div class="card">
                   <div class="card-body">
                     <div class="card-titlecover">
-                    <h4 class="card-title">전체 회원 관리</h4>
+                    <h4 class="card-title">전체회원관리</h4>
                     <div class="input-group">
                       <div class="input-group-prepend bg-transparent">
                         <i class="input-group-text border-0 mdi mdi-magnify"></i>
@@ -250,80 +250,27 @@
                     <table class="table table-striped">
                       <thead>
                         <tr>
+                          <th>no.</th>
                           <th>회원 아이디</th>
                           <th>회원 프로필</th>
                           <th>회원 이름</th>
+                          <th>회원 이메일</th>
                           <th>등급</th>
-                          <th>블라인드 처리하기</th>
                           <th>회원 삭제하기</th>
                         </tr>
                       </thead>
                       <tbody>
+                      {{#users}}
                         <tr>
-                          <td>1</td>
-                          <td class="py-1">
-                            <img
-                              src="../../assets/images/faces-clipart/pic-1.png"
-                              alt="image"
-                            />
-                          </td>
-                          <td>Herman Beck</td>
-                          <td>ROLE_USER</td>
-                          <td><button>블라인드</button></td>
-                          <td><button>삭제하기</button></td>
+                          <td><input id="id_{{id}}" type="hidden" value="{{id}}" />{{id}}</td>
+                          <td>{{snsId}}</td>
+                          <td>{{profileImage}}</td>
+                          <td>{{nickName}}</td>
+                          <td>{{email}}</td>
+                          <td>{{userRole}}</td>
+                          <td><button class="btn-delete" id="delete_{{id}}">삭제</button></td>
                         </tr>
-                        <tr>
-                          <td>1</td>
-                          <td class="py-1">
-                            <img
-                              src="../../assets/images/faces-clipart/pic-1.png"
-                              alt="image"
-                            />
-                          </td>
-                          <td>Herman Beck</td>
-                          <td>ROLE_USER</td>
-                          <td><button>블라인드</button></td>
-                          <td><button>삭제하기</button></td>
-                        </tr>
-                        <tr>
-                          <td>1</td>
-                          <td class="py-1">
-                            <img
-                              src="../../assets/images/faces-clipart/pic-1.png"
-                              alt="image"
-                            />
-                          </td>
-                          <td>Herman Beck</td>
-                          <td>ROLE_USER</td>
-                          <td><button>블라인드</button></td>
-                          <td><button>삭제하기</button></td>
-                        </tr>
-                        <tr>
-                          <td>1</td>
-                          <td class="py-1">
-                            <img
-                              src="../../assets/images/faces-clipart/pic-1.png"
-                              alt="image"
-                            />
-                          </td>
-                          <td>Herman Beck</td>
-                          <td>ROLE_USER</td>
-                          <td><button>블라인드</button></td>
-                          <td><button>삭제하기</button></td>
-                        </tr>
-                        <tr>
-                          <td>1</td>
-                          <td class="py-1">
-                            <img
-                              src="../../assets/images/faces-clipart/pic-1.png"
-                              alt="image"
-                            />
-                          </td>
-                          <td>Herman Beck</td>
-                          <td>ROLE_USER</td>
-                          <td><button>블라인드</button></td>
-                          <td><button>삭제하기</button></td>
-                        </tr>
+                        {{/users}}
                       </tbody>
                     </table>
                   </div>
@@ -363,6 +310,7 @@
     <!-- Plugin js for this page -->
     <!-- End plugin js for this page -->
     <!-- inject:js -->
+    <script src="../../assets/js/user.js"></script>
     <script src="../../assets/js/off-canvas.js"></script>
     <script src="../../assets/js/hoverable-collapse.js"></script>
     <script src="../../assets/js/misc.js"></script>

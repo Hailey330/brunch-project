@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.project.brunch.domain.post.Post;
 import com.project.brunch.domain.user.User;
-import com.project.brunch.repository.UserRepository;
+import com.project.brunch.domain.user.UserRepository;
 
 public class NowServiceTest {
 

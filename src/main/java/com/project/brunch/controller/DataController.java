@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,10 +14,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.brunch.domain.post.Post;
+import com.project.brunch.domain.post.PostRepository;
 import com.project.brunch.domain.tag.Tag;
 import com.project.brunch.domain.user.User;
-import com.project.brunch.repository.PostRepository;
-import com.project.brunch.repository.UserRepository;
+import com.project.brunch.domain.user.UserRepository;
+import com.project.brunch.service.admin.UserService;
+import com.project.brunch.service.crawling.post.NowService;
 import com.project.brunch.service.crawling.user.NowCrawling;
 
 import lombok.RequiredArgsConstructor;
@@ -28,9 +32,10 @@ public class DataController {
 
 	private final UserRepository userRepository;
 	private final PostRepository postRepository;
+	private final UserService userService;
 
 	@PostMapping("/post")
-	public String post(@RequestBody Post post) {
+	public @ResponseBody String post(@RequestBody Post post) {
 		postRepository.save(post);
 		return "글쓰기 완료";
 	}
@@ -41,8 +46,16 @@ public class DataController {
 	}
 
 	@GetMapping("/saveposts")
-	public List<Post> getPosts() {
-		return postRepository.findAll();
+	public String getPosts(NowService nowService) {
+		List<Post> posts = null;
+		try {
+			posts = nowService.getBrunchDatas();
+			postRepository.saveAll(posts);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "포스트 저장완료";
 	}
 	
 	@GetMapping("/saveuser")
@@ -57,5 +70,12 @@ public class DataController {
 			e.printStackTrace();
 		}
 		return "유저 저장완료";
+	}
+	
+	@DeleteMapping("/admin/user/{id}")
+	public @ResponseBody int deleteById(@PathVariable int id) {
+		System.out.println("Controller : " + id);
+		userService.삭제하기(id);
+		return id;
 	}
 }

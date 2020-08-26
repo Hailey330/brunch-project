@@ -4,19 +4,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.junit.Test;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.project.brunch.domain.post.Post;
 import com.project.brunch.domain.user.User;
-import com.project.brunch.domain.user.UserRole;
 
 // 작가 아이디명(snsId), 닉네임 크롤링해서 User 에 담기
 
@@ -33,13 +29,15 @@ public class NowService {
 	private static Elements elWriter;
 	private static Post post;
 
-	public List<Post> getBrunchDatas(Model model) throws IOException {
+	public List<Post> getBrunchDatas() throws IOException {
 
 		List<Post> postList = new ArrayList<>();
-		User userId = (User) model.getAttribute("senduser");
+//		User userId = (User) model.getAttribute("senduser");
+//		String userId = "pistol4747";
 		
 		while (true) {
-			URL = host + "@" + userId.getSnsId() + "/"+ postId;
+//			URL = host + "@" + userId.getSnsId() + "/"+ postId;
+			URL = host + "@min9195" + "/"+ postId;
 			Document doc = Jsoup.connect(URL).get();
 			element = doc.select(".wrap_view_article");
 			elCover = element.select(".wrap_cover");

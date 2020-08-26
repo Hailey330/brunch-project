@@ -16,8 +16,8 @@ import com.project.brunch.config.auth.provider.KakaoUserInfo;
 import com.project.brunch.config.auth.provider.OAuth2UserInfo;
 import com.project.brunch.config.jwt.JwtProperties;
 import com.project.brunch.domain.user.User;
+import com.project.brunch.domain.user.UserRepository;
 import com.project.brunch.domain.user.UserRole;
-import com.project.brunch.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -30,10 +30,10 @@ public class JwtCreateController {
 	private final UserRepository userRepository;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	
-	@PostMapping("oauth/jwt/kakao") 
+	@PostMapping("/oauth/jwt/kakao") 
 	public String jwtCreate(@RequestBody Map<String, Object> data) {
 		System.out.println("jwtCreate 실행됨");
-		System.out.println(data.get("profilePbj"));
+		System.out.println(data.get("profileObj"));
 		
 		OAuth2UserInfo kakaoUser = new KakaoUserInfo((Map<String, Object>)data.get("profileObj"));
 		

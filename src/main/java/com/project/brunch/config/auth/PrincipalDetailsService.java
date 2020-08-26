@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.project.brunch.domain.user.User;
-import com.project.brunch.repository.UserRepository;
+import com.project.brunch.domain.user.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 

@@ -10,7 +10,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.project.brunch.config.jwt.JwtAuthorizationFilter;
-import com.project.brunch.repository.UserRepository;
+import com.project.brunch.domain.user.UserRepository;
 
 @Configuration
 @EnableWebSecurity // 시큐리티 활성화 -> 기본 스프링 필터체인에 등록한다.

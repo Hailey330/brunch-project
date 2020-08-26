@@ -17,7 +17,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.project.brunch.config.auth.PrincipalDetails;
 import com.project.brunch.domain.user.User;
-import com.project.brunch.repository.UserRepository;
+import com.project.brunch.domain.user.UserRepository;
 
 // 인가
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {

@@ -13,6 +13,7 @@ import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 
 import com.project.brunch.domain.user.User;
+import com.project.brunch.domain.user.UserRole;
 
 @Service
 public class NowCrawling {
@@ -36,6 +37,7 @@ public class NowCrawling {
 			User users = User.builder()
 					.snsId(Id)
 					.nickName(nickName)
+					.userRole(UserRole.USER)
 					.build();
 			
 			idList.add(users);
