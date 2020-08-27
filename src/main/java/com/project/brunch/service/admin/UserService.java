@@ -15,7 +15,7 @@ public class UserService {
 	
 	@Transactional
 	public void 삭제하기(int id) {
-		User user = userRepository.findById(id);
+		User user = userRepository.findById(id).get();
 		System.out.println("UserService 삭제하기 : " + id);
 		userRepository.delete(user);
 	}

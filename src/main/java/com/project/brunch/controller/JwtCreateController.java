@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.project.brunch.config.auth.provider.KakaoUserInfo;
-import com.project.brunch.config.auth.provider.OAuth2UserInfo;
 import com.project.brunch.config.jwt.JwtProperties;
 import com.project.brunch.domain.user.User;
 import com.project.brunch.domain.user.UserRepository;
@@ -33,11 +32,13 @@ public class JwtCreateController {
 	@PostMapping("/oauth/jwt/kakao") 
 	public String jwtCreate(@RequestBody Map<String, Object> data) {
 		System.out.println("jwtCreate 실행됨");
-		System.out.println(data.get("profileObj"));
+//		System.out.println("jwtCreate : data : " + data);
+		System.out.println(data); // 효선이 키값 맞춰서 넣어야하고 
 		
-		OAuth2UserInfo kakaoUser = new KakaoUserInfo((Map<String, Object>)data.get("profileObj"));
+//		KakaoUserInfo kakaoUser = new KakaoUserInfo((Map<String, Object>)data.get("profile")); // data 값 봐야하고 
+		KakaoUserInfo kakaoUser = new KakaoUserInfo((Map<String, Object>)data); // data 값 봐야하고 
 		
-		User userEntity = userRepository.findById(kakaoUser.getProvider()+"_"+kakaoUser.getProviderId());
+		User userEntity = userRepository.findBySnsId(kakaoUser.getProvider()+"_"+kakaoUser.getProviderId());
 		
 		if (userEntity == null) {
 			User userRequest = User.builder()
@@ -55,8 +56,8 @@ public class JwtCreateController {
 		String jwtToken = JWT.create()
 				.withSubject(userEntity.getSnsId())
 				.withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.EXPIRATION_TIME))
-				.withClaim("id", userEntity.getSnsId())
-				.withClaim("nickName", userEntity.getNickName())
+				.withClaim("id", userEntity.getId())
+				.withClaim("snsId", userEntity.getSnsId())
 				.sign(Algorithm.HMAC512(JwtProperties.SECRET));
 		
 		return jwtToken;

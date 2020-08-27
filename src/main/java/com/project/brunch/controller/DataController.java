@@ -1,8 +1,13 @@
 package com.project.brunch.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,11 +19,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.brunch.domain.post.Post;
+import com.project.brunch.domain.post.PostMapper;
 import com.project.brunch.domain.post.PostRepository;
 import com.project.brunch.domain.tag.Tag;
 import com.project.brunch.domain.user.User;
 import com.project.brunch.domain.user.UserRepository;
 import com.project.brunch.service.admin.UserService;
+import com.project.brunch.service.crawling.post.CoverImgParser;
+import com.project.brunch.service.crawling.post.ImgService;
 import com.project.brunch.service.crawling.post.NowService;
 import com.project.brunch.service.crawling.user.NowCrawling;
 
@@ -33,10 +41,40 @@ public class DataController {
 	private final UserRepository userRepository;
 	private final PostRepository postRepository;
 	private final UserService userService;
+	private final CoverImgParser coverImgParser;
+	private final ImgService imgService;
+	private final PostMapper postMapper;
 
 	@PostMapping("/post")
 	public @ResponseBody String post(@RequestBody Post post) {
+		
 		postRepository.save(post);
+		
+//		int postId = post.getId();
+		
+//		String src = post.getContent();
+//		System.out.println("이미지 자체 : " + src);
+//		
+//		Document doc = Jsoup.parse(src);
+//		
+//		Elements coverImg = doc.select("img");
+//		System.out.println("coverImg : " + coverImg);
+//		System.out.println("coverImg[0] : " + coverImg.get(0));
+//		Element coverSrc = coverImg.get(0);
+//		String coverfin = coverSrc.attr("src");
+//		System.out.println("coverfin : " + coverfin);
+//		String coverfinal = '"' + coverfin + '"';
+//		System.out.println("coverfinal ::: " + coverfinal);
+		
+//		Post finalcoverImg = post.builder()
+//				.coverImg(coverfinal)
+//				.build();
+		
+//		try {
+//			postId = postMapper.UpdateByPost(finalcoverImg);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 		return "글쓰기 완료";
 	}
 

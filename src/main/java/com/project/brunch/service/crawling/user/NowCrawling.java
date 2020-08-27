@@ -41,7 +41,7 @@ public class NowCrawling {
 					.build();
 			
 			idList.add(users);
-			System.out.println(users);
+//			System.out.println(users);
 			
 		}
 		return idList;
