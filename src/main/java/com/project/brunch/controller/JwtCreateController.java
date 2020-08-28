@@ -32,10 +32,8 @@ public class JwtCreateController {
 	@PostMapping("/oauth/jwt/kakao") 
 	public String jwtCreate(@RequestBody Map<String, Object> data) {
 		System.out.println("jwtCreate 실행됨");
-//		System.out.println("jwtCreate : data : " + data);
 		System.out.println(data); // 효선이 키값 맞춰서 넣어야하고 
 		
-//		KakaoUserInfo kakaoUser = new KakaoUserInfo((Map<String, Object>)data.get("profile")); // data 값 봐야하고 
 		KakaoUserInfo kakaoUser = new KakaoUserInfo((Map<String, Object>)data); // data 값 봐야하고 
 		
 		User userEntity = userRepository.findBySnsId(kakaoUser.getProvider()+"_"+kakaoUser.getProviderId());
@@ -59,6 +57,8 @@ public class JwtCreateController {
 				.withClaim("id", userEntity.getId())
 				.withClaim("snsId", userEntity.getSnsId())
 				.sign(Algorithm.HMAC512(JwtProperties.SECRET));
+		
+		System.out.println("Token : " + jwtToken);
 		
 		return jwtToken;
 	}

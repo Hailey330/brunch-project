@@ -1,4 +1,4 @@
-package com.project.brunch.test.mail;
+package com.project.brunch.dto;
 
 import java.util.Date;
 import java.util.Properties;
@@ -18,16 +18,19 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
 
-public class GoogleMailSendTest {
+import com.project.brunch.service.admin.UserService;
 
-	public static void sendMail() {
+public class GoogleMailSend {
+	
+	public void sendMail(String mail) {
+		System.out.println("GoogleMailSendTest : " + mail);
 		// 메일 인코딩
 		final String bodyEncoding = "UTF-8"; // 콘텐츠 인코딩
 		
 		String subject = "Brunch 관리자";
 		String fromEmail = "admin@brunch.co.kr"; // 보낼 이메일 주소 
 		String fromUsername = "ADMIN";
-		String toEmail = ""; // 받을 이메일주소(테스트는 일단 내껄로 적고, 이후 테스트는 ajax에 할거라서 지워도될듯)
+		String toEmail = mail; // 받을 이메일주소(테스트는 일단 내껄로 적고, 이후 테스트는 ajax에 할거라서 지워도될듯)
 		
 		final String username = "aryeong0325@gmail.com"; // google 계정
 		final String password = "ojyufezwgrrpnmat"; // 발급받은 앱 비밀번호

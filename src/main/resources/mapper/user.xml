@@ -8,8 +8,12 @@
     SELECT snsId, profileImage, nickName, userRole FROM user
   </select>
   
+  <select id="findByDelUserEmail" resultType="com.project.brunch.domain.user.User">
+  	SELECT email From user WHERE id = #{id}
+  </select>
+  
   <delete id ="deleteById">
-  	delete from post where id = #{id}
+  	DELETE FROM post WHERE id = #{id}
   </delete>
   
 </mapper>

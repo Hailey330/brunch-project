@@ -1,13 +1,8 @@
 package com.project.brunch.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +19,7 @@ import com.project.brunch.domain.post.PostRepository;
 import com.project.brunch.domain.tag.Tag;
 import com.project.brunch.domain.user.User;
 import com.project.brunch.domain.user.UserRepository;
+import com.project.brunch.dto.GoogleMailSend;
 import com.project.brunch.service.admin.UserService;
 import com.project.brunch.service.crawling.post.CoverImgParser;
 import com.project.brunch.service.crawling.post.ImgService;
@@ -44,6 +40,9 @@ public class DataController {
 	private final CoverImgParser coverImgParser;
 	private final ImgService imgService;
 	private final PostMapper postMapper;
+	
+	private GoogleMailSend googleMailSend;
+	public static String useremail;
 
 	@PostMapping("/post")
 	public @ResponseBody String post(@RequestBody Post post) {
@@ -112,7 +111,12 @@ public class DataController {
 	
 	@DeleteMapping("/admin/user/{id}")
 	public @ResponseBody int deleteById(@PathVariable int id) {
-		System.out.println("Controller : " + id);
+		// 이메일 가져오기
+		useremail =userService.이메일찾기(id);
+		
+		googleMailSend = new GoogleMailSend();
+		googleMailSend.sendMail(useremail);
+		
 		userService.삭제하기(id);
 		return id;
 	}
