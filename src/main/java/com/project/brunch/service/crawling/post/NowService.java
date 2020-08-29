@@ -37,7 +37,7 @@ public class NowService {
 		
 		while (true) {
 //			URL = host + "@" + userId.getSnsId() + "/"+ postId;
-			URL = host + "@min9195" + "/"+ postId;
+			URL = host + "@ws820512" + "/"+ postId;
 			Document doc = Jsoup.connect(URL).get();
 			element = doc.select(".wrap_view_article");
 			elCover = element.select(".wrap_cover");

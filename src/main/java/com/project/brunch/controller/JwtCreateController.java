@@ -32,7 +32,7 @@ public class JwtCreateController {
 	@PostMapping("/oauth/jwt/kakao") 
 	public String jwtCreate(@RequestBody Map<String, Object> data) {
 		System.out.println("jwtCreate 실행됨");
-		System.out.println(data); // 효선이 키값 맞춰서 넣어야하고 
+		System.out.println(data);  
 		
 		KakaoUserInfo kakaoUser = new KakaoUserInfo((Map<String, Object>)data); // data 값 봐야하고 
 		
@@ -42,6 +42,8 @@ public class JwtCreateController {
 			User userRequest = User.builder()
 					.snsId(kakaoUser.getProvider()+"_"+kakaoUser.getProviderId())
 					.email(kakaoUser.getEmail())
+					.bio(kakaoUser.getName() + "의 브런치 입니다.")
+					.profileImage("https://img1.daumcdn.net/thumb/C100x100.fpng/?fname=https://t1.daumcdn.net/brunch/static/img/help/pc/ico_profile_100_01.png")
 					.nickName(kakaoUser.getName())
 					.provider(kakaoUser.getProvider())
 					.providerId(kakaoUser.getProviderId())

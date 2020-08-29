@@ -8,4 +8,10 @@
     SELECT coverImg FROM post WEHRE id=#{id}
   </update>
   
+  <select id="PostList" resultType="com.project.brunch.dto.PostDto">
+  	SELECT p.id, p.content, p.coverImg, p.createDate, p.postType, p.readCount, p.subTitle, p.title, p.userId , u.nickname
+	FROM post p INNER JOIN user u
+	ON p.userid = u.id
+  </select>
+  
 </mapper>

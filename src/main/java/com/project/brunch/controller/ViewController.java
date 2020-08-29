@@ -17,7 +17,7 @@ import com.project.brunch.config.auth.PrincipalDetails;
 import com.project.brunch.domain.post.PostRepository;
 import com.project.brunch.domain.user.User;
 import com.project.brunch.domain.user.UserRepository;
-import com.project.brunch.service.admin.UserService;
+import com.project.brunch.service.admin.AdminUserService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -32,7 +32,7 @@ public class ViewController {
 
 	private final UserRepository userRepository;
 	private final PostRepository postRepository;
-	private final UserService userService;
+	private final AdminUserService userService;
 	
 	// 모든 사람이 접근 가능
 	@GetMapping("/")
@@ -52,32 +52,4 @@ public class ViewController {
 		PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
 		return "user";
 	}
-	
-	@GetMapping("/admin")
-	public String dashboard() {
-		return "dashboard";
-	}
-	
-	@GetMapping("/admin/user")
-	public String userForm(Model model) {
-		List<User> users = userRepository.findAll();
-		model.addAttribute("users", users);
-	
-		return "user";
-	}
-	
-	@GetMapping("/admin/post")
-	public String postForm() {
-		return "post";
-	}	
-	
-	@GetMapping("/admin/main")
-	public String adminMainForm() {
-		return "main";
-	}	
-	
-	@GetMapping("/admin/comment")
-	public String admincommentForm() {
-		return "comment";
-	}	
 }

@@ -18,7 +18,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
 
-import com.project.brunch.service.admin.UserService;
+import com.project.brunch.service.admin.AdminUserService;
 
 public class GoogleMailSend {
 	

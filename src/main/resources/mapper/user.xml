@@ -16,4 +16,8 @@
   	DELETE FROM post WHERE id = #{id}
   </delete>
   
+  <select id="findByUserEmail" resultType="com.project.brunch.domain.user.User">
+  	SELECT * FROM user WHERE email =#{email}
+  </select>
+  
 </mapper>

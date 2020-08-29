@@ -23,6 +23,7 @@ public class NowCrawling {
 	private static String userId;
 	private static String Id;
 	private static String nickName;
+	private static String profileImage;
 
 	@PostConstruct
 	public List<User> getNowCrawling() throws IOException {
@@ -36,6 +37,9 @@ public class NowCrawling {
 
 			User users = User.builder()
 					.snsId(Id)
+					.email("aryeong2@naver.com")
+					.bio(nickName+"님의 브런치입니다.")
+					.profileImage("https://img1.daumcdn.net/thumb/C100x100.fpng/?fname=https://t1.daumcdn.net/brunch/static/img/help/pc/ico_profile_100_01.png")
 					.nickName(nickName)
 					.userRole(UserRole.USER)
 					.build();

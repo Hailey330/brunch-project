@@ -10,7 +10,7 @@ import com.project.brunch.domain.user.UserMapper;
 import com.project.brunch.domain.user.UserRepository;
 
 @Service
-public class UserService {
+public class AdminUserService {
 
 	@Autowired
 	private UserRepository userRepository;
