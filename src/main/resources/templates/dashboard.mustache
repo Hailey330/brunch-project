@@ -25,7 +25,7 @@
     <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
         <a class="navbar-brand brand-logo" href="/"><img src="../assets/images/logo_brunch.png" alt="logo" /></a>
-        <a class="navbar-brand brand-logo-mini" href="/"><img src="assets/images/logo-mini.svg"
+        <a class="navbar-brand brand-logo-mini" href="/"><img src="../assets/images/minilogo.png"
             alt="logo" /></a>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-stretch">
@@ -239,11 +239,12 @@
           <div class="row">
             <div class="col-md-4 stretch-card grid-margin">
               <div class="card bg-gradient-danger card-img-holder text-white">
+                {{#adminDto}}
                 <div class="card-body">
                   <img src="../assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
                   <h4 class="font-weight-normal mb-3">총 회원 수 <i class="mdi mdi-chart-line mdi-24px float-right"></i>
                   </h4>
-                  <h2 class="mb-5">4</h2>
+                  <h2 class="mb-5">{{adminDto.allUserCount}}</h2>
                   <h6 class="card-text">Increased by 60%</h6>
                 </div>
               </div>
@@ -255,7 +256,7 @@
                   <h4 class="font-weight-normal mb-3">총 글 수 <i
                       class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
                   </h4>
-                  <h2 class="mb-5">10</h2>
+                  <h2 class="mb-5">{{adminDto.allPostCount}}</h2>
                   <h6 class="card-text">Decreased by 10%</h6>
                 </div>
               </div>
@@ -266,17 +267,18 @@
                   <img src="../assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
                   <h4 class="font-weight-normal mb-3">오늘 올라온 글 수 <i class="mdi mdi-diamond mdi-24px float-right"></i>
                   </h4>
-                  <h2 class="mb-5">10</h2>
+                  <h2 class="mb-5">{{adminDto.todayPostCount}}</h2>
                   <h6 class="card-text">Increased by 5%</h6>
                 </div>
               </div>
             </div>
+          {{/adminDto}}
           </div>
           <div class="row">
             <div class="col-md-7 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">방문자 수</h4>
+                  <h4 class="card-title">방문자 수 차트</h4>
                   <canvas id="lineChart" style="height:250px"></canvas>
                 </div>
               </div>
@@ -308,46 +310,15 @@
                         </tr>
                       </thead>
                       <tbody>
+                        {{#readCountRank}}
                         <tr>
                           <td> 1 </td>
-                          <td>
-                            <img src="assets/images/faces/face1.jpg" class="mr-2" alt="image"> David Grey </td>
-                          <td> Fund is not recieved </td>
-                          <td> 5 </td>
-                          <td> Dec 5, 2017 </td>
+                          <td>{{nickName}}</td>
+                          <td>{{title}}</td>
+                          <td>{{readCount}}</td>
+                          <td>{{createDate}}</td>
                         </tr>
-                        <tr>
-                          <td> 2 </td>
-                          <td>
-                            <img src="assets/images/faces/face2.jpg" class="mr-2" alt="image"> Stella Johnson </td>
-                          <td> High loading time </td>
-                          <td> 4 </td>
-                          <td> Dec 12, 2017 </td>
-                        </tr>
-                        <tr>
-                          <td> 3 </td>
-                          <td>
-                            <img src="assets/images/faces/face3.jpg" class="mr-2" alt="image"> Marina Michel </td>
-                          <td> Website down for one week </td>
-                          <td> 3 </td>
-                          <td> Dec 16, 2017 </td>
-                        </tr>
-                        <tr>
-                          <td> 4 </td>
-                          <td>
-                            <img src="assets/images/faces/face4.jpg" class="mr-2" alt="image"> John Doe </td>
-                          <td> Loosing control on server </td>
-                          <td> 2 </td>
-                          <td> Dec 3, 2017 </td>
-                        </tr>
-                        <tr>
-                          <td> 5 </td>
-                          <td>
-                            <img src="assets/images/faces/face4.jpg" class="mr-2" alt="image"> John Doe </td>
-                          <td> Loosing control on server </td>
-                          <td> 2 </td>
-                          <td> Dec 3, 2017 </td>
-                        </tr>
+                        {{/readCountRank}}
                       </tbody>
                     </table>
                   </div>
@@ -379,38 +350,6 @@
                           <td> Fund is not recieved </td>
                           <td> 5 </td>
                           <td> Dec 5, 2017 </td>
-                        </tr>
-                        <tr>
-                          <td> 2 </td>
-                          <td>
-                            <img src="assets/images/faces/face2.jpg" class="mr-2" alt="image"> Stella Johnson </td>
-                          <td> High loading time </td>
-                          <td> 4 </td>
-                          <td> Dec 12, 2017 </td>
-                        </tr>
-                        <tr>
-                          <td> 3 </td>
-                          <td>
-                            <img src="assets/images/faces/face3.jpg" class="mr-2" alt="image"> Marina Michel </td>
-                          <td> Website down for one week </td>
-                          <td> 3 </td>
-                          <td> Dec 16, 2017 </td>
-                        </tr>
-                        <tr>
-                          <td> 4 </td>
-                          <td>
-                            <img src="assets/images/faces/face4.jpg" class="mr-2" alt="image"> John Doe </td>
-                          <td> Loosing control on server </td>
-                          <td> 2 </td>
-                          <td> Dec 3, 2017 </td>
-                        </tr>
-                        <tr>
-                          <td> 5 </td>
-                          <td>
-                            <img src="assets/images/faces/face4.jpg" class="mr-2" alt="image"> John Doe </td>
-                          <td> Loosing control on server </td>
-                          <td> 2 </td>
-                          <td> Dec 3, 2017 </td>
                         </tr>
                       </tbody>
                     </table>

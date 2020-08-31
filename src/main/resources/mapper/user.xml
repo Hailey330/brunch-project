@@ -5,7 +5,7 @@
   
 <mapper namespace="com.project.brunch.domain.user.UserMapper">
   <select id="findByUser" resultType="com.project.brunch.domain.user.User">
-    SELECT snsId, profileImage, nickName, userRole FROM user
+    SELECT * FROM user
   </select>
   
   <select id="findByDelUserEmail" resultType="com.project.brunch.domain.user.User">

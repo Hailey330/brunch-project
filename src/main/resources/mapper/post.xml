@@ -14,4 +14,18 @@
 	ON p.userid = u.id
   </select>
   
+  <select id ="findByTodayPost" resultType="com.project.brunch.domain.post.Post">
+  	  SELECT * 
+  	  FROM post 
+  	  WHERE createDate > curdate( )
+  </select>
+  
+  <select id="findByreadCountRank" resultType="com.project.brunch.dto.AdminDto">
+  	SELECT p.createDate, p.readCount, p.title, u.nickname
+	FROM post p INNER JOIN user u
+	ON p.userid = u.id
+	order by readCount desc
+	limit 5
+  </select>
+  
 </mapper>

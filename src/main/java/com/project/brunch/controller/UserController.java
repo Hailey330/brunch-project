@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,6 +28,13 @@ public class UserController {
 	private final UserRepository userRepository;
 	private final UserService userService;
 	
+	// 메인페이지 user정보 뿌리기 
+	@GetMapping("user")
+	public List<User> homeUser() {
+		
+		return userService.목록보기();
+	}
+	
 	@GetMapping("/saveuser")
 	@ResponseBody
 	public String saveUser(NowCrawling nowCrawling) {
@@ -42,7 +50,7 @@ public class UserController {
 	}
 
 	@PostMapping("/user/{email}")
-	public User loginUser(String email) {
+	public User loginUser(@PathVariable String email) {
 		
 		return userService.로그인유저찾기(email);
 	}

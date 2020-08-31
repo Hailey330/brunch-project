@@ -21,30 +21,4 @@ public class UserDto {
 	private UserRole userRole;
 	private String provider;
 	private String providerId;
-	
-//	public User toEntity() {
-//		User build = User.builder()
-//				.id(id)
-//				.password(password)
-//				.nickName(nickName)
-//				.email(email)
-//				.bio(bio)
-//				.snsId(snsId)
-//				.profileImage(profileImage)
-//				.userRole(userRole.USER)
-//				.provider(provider)
-//				.providerId(providerId)
-//				.build();
-//		
-//		return build;
-//	}
-//	
-//	@Builder
-//	public UserDto(int id, String snsId, String profileImage, String nickName, UserRole userRole) {
-//		this.id = id;
-//		this.snsId = snsId;
-//		this.profileImage = profileImage;
-//		this.nickName = nickName;
-//		this.userRole = userRole;
-//	}
 }

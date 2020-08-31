@@ -14,7 +14,7 @@ import com.project.brunch.domain.user.UserRepository;
 
 @Service
 public class UserService {
-
+	
 	@Autowired
 	private UserRepository userRepository;
 	
@@ -24,5 +24,18 @@ public class UserService {
 	@Transactional(readOnly = true)
 	public User 로그인유저찾기(String email) {
 		return userMapper.findByUserEmail(email);
+	}
+	
+	@Transactional(readOnly = true)
+	public List<User> 목록보기() {
+		
+		try {
+			return userMapper.findByUser();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 }

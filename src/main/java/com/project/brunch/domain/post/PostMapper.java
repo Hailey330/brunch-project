@@ -7,4 +7,6 @@ public interface PostMapper {
 
 	void UpdateByPost(int id) throws Exception; 
 	List<Post> PostList() throws Exception;
+	List<Post> findByTodayPost() throws Exception;
+	List<Post> findByreadCountRank() throws Exception;
 }

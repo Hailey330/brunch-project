@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.project.brunch.config.auth.PrincipalDetails;
 import com.project.brunch.domain.post.PostRepository;
 import com.project.brunch.domain.user.User;
+import com.project.brunch.domain.user.UserMapper;
 import com.project.brunch.domain.user.UserRepository;
 import com.project.brunch.service.admin.AdminUserService;
 
@@ -45,6 +46,9 @@ public class ViewController {
 	public String login() {
 		return "로그인 화면";
 	}
+	
+	// user정보 테스트
+	
 	
 	// User만 접근가능
 	@GetMapping("/profile")
