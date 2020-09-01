@@ -1,4 +1,4 @@
-package com.project.brunch.controller;
+package com.project.brunch.web;
 
 import java.util.Date;
 import java.util.Map;
@@ -12,11 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.project.brunch.config.auth.provider.KakaoUserInfo;
 import com.project.brunch.config.jwt.JwtProperties;
+import com.project.brunch.config.oauth.KakaoUserInfo;
+import com.project.brunch.config.oauth.OAuth2UserInfo;
 import com.project.brunch.domain.user.User;
 import com.project.brunch.domain.user.UserRepository;
 import com.project.brunch.domain.user.UserRole;
+import com.project.brunch.web.dto.CommonRespDto;
+import com.project.brunch.web.dto.StatusCode;
 
 import lombok.RequiredArgsConstructor;
 
@@ -64,4 +67,42 @@ public class JwtCreateController {
 		
 		return jwtToken;
 	}
+	
+	@PostMapping("/oauth/jwt/kakao/android") 
+	public CommonRespDto<?> jwtCreateAndroid(@RequestBody Map<String, Object> data) {
+		System.out.println("jwtCreate 실행됨");
+		System.out.println("data ::: " + data);
+		
+		OAuth2UserInfo kakaoUser = new KakaoUserInfo((Map<String, Object>) data);
+		
+		User userEntity = userRepository.findBySnsId(kakaoUser.getProvider()+"_"+kakaoUser.getProviderId());
+		
+		if (userEntity == null) {
+			User userRequest = User.builder()
+					.snsId(kakaoUser.getProvider()+"_"+kakaoUser.getProviderId())
+					.nickName(kakaoUser.getName())
+					.email(kakaoUser.getEmail())
+					.provider(kakaoUser.getProvider())
+					.providerId(kakaoUser.getProviderId())
+					.userRole(UserRole.USER) 
+					.build();
+			
+			userEntity = userRepository.save(userRequest);
+		}
+		
+		String jwtToken = JWT.create()
+				.withSubject(userEntity.getSnsId())
+				.withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.EXPIRATION_TIME))
+				.withClaim("id", userEntity.getSnsId())
+				.withClaim("nickName", userEntity.getNickName())
+				.sign(Algorithm.HMAC512(JwtProperties.SECRET));
+		
+		CommonRespDto<?> respDto = CommonRespDto.builder()
+				.statusCode(StatusCode.OK)
+				.data(jwtToken)
+				.build();
+		
+		return respDto;
+	}
+	
 }

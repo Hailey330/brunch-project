@@ -1,4 +1,4 @@
-package com.project.brunch.controller;
+package com.project.brunch.web;
 
 import java.util.List;
 
@@ -15,11 +15,11 @@ import com.project.brunch.domain.post.Post;
 import com.project.brunch.domain.post.PostRepository;
 import com.project.brunch.domain.user.User;
 import com.project.brunch.domain.user.UserRepository;
-import com.project.brunch.dto.AdminDto;
-import com.project.brunch.dto.GoogleMailSend;
-import com.project.brunch.dto.PostDto;
-import com.project.brunch.service.AdminPostService;
+import com.project.brunch.service.admin.AdminPostService;
 import com.project.brunch.service.admin.AdminUserService;
+import com.project.brunch.web.dto.AdminDto;
+import com.project.brunch.web.dto.GoogleMailSend;
+import com.project.brunch.web.dto.PostDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -40,6 +40,11 @@ public class AdminController {
 	public static String useremail;
 	
 	@GetMapping("/admin")
+	public String adminLoginForm() {
+		return "adminlogin";
+	}	
+	
+	@GetMapping("/admin/dashboard")
 	public String dashboard(Model model, Model model2) {
 		
 		AdminDto adminDto = adminUserService.회원Count();
@@ -80,7 +85,7 @@ public class AdminController {
 	}	
 	
 	@GetMapping("/admin/comment")
-	public String admincommentForm() {
+	public String adminCommentForm() {
 		return "comment";
 	}	
 }

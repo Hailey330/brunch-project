@@ -1,4 +1,4 @@
-package com.project.brunch.service;
+package com.project.brunch.service.admin;
 
 import java.util.List;
 

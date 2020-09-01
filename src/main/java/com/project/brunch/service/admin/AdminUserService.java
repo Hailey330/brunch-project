@@ -13,7 +13,7 @@ import com.project.brunch.domain.post.PostRepository;
 import com.project.brunch.domain.user.User;
 import com.project.brunch.domain.user.UserMapper;
 import com.project.brunch.domain.user.UserRepository;
-import com.project.brunch.dto.AdminDto;
+import com.project.brunch.web.dto.AdminDto;
 
 @Service
 public class AdminUserService {

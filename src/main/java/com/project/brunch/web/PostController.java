@@ -1,4 +1,4 @@
-package com.project.brunch.controller;
+package com.project.brunch.web;
 
 import java.io.IOException;
 import java.util.List;
@@ -52,6 +52,11 @@ public class PostController {
 	@PostMapping("/tag")
 	public String keyword(@RequestBody Tag tag) {
 		return "태그 완료";
+	}
+	
+	@GetMapping("/posts")
+	public List<Post> getpost() {
+		return postRepository.findAll();
 	}
 	
 	@GetMapping("/postlist")

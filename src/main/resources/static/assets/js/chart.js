@@ -5,10 +5,10 @@ $(function () {
    */
   'use strict';
   var data = {
-    labels: ["8.20", "8.21", "8.22", "8.23", "8.24", "8.25"],
+//    labels: ["8.20", "8.21", "8.22", "8.23", "8.24", "8.25"],
     datasets: [{
       label: '# of Votes',
-      data: [10, 19, 3, 5, 2, 3],
+      data: [10, 19, 3, 5, 2, 3], // 데이터 배열
       backgroundColor: [
         'rgba(255, 99, 132, 0.2)',
         'rgba(54, 162, 235, 0.2)',
@@ -30,11 +30,11 @@ $(function () {
     }]
   };
 
-  var options = {
+  var options = { // 추가옵션을 원하는 경우 작성
     scales: {
-      yAxes: [{
+      yAxes: [{ // y축에 관련된 옵션(x축일 경우 : xAxes)
         ticks: {
-          beginAtZero: true
+          beginAtZero: true // 데이터표기를 'o'부터 표기한다.
         }
       }]
     },
@@ -48,82 +48,6 @@ $(function () {
     }
 
   };
-  var optionsDark = { // 필요함
-    scales: {
-      yAxes: [{
-        ticks: {
-          beginAtZero: true
-        },
-        gridLines: {
-          color: '#322f2f',
-          zeroLineColor: '#322f2f'
-        }
-      }],
-      xAxes: [{
-        ticks: {
-          beginAtZero: true
-        },
-        gridLines: {
-          color: '#322f2f',
-        }
-      }],
-    },
-    legend: {
-      display: false
-    },
-    elements: {
-      point: {
-        radius: 0
-      }
-    }
-  };
-  var doughnutPieData = {
-    datasets: [{
-      data: [30, 40, 30],
-      backgroundColor: [
-        'rgba(255, 99, 132, 0.5)',
-        'rgba(54, 162, 235, 0.5)',
-        'rgba(255, 206, 86, 0.5)',
-        'rgba(75, 192, 192, 0.5)',
-        'rgba(153, 102, 255, 0.5)',
-        'rgba(255, 159, 64, 0.5)'
-      ],
-      borderColor: [
-        'rgba(255,99,132,1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)'
-      ],
-    }],
-
-    // These labels appear in the legend and in the tooltips when hovering different arcs
-    labels: [
-      'Pink',
-      'Blue',
-      'Yellow',
-    ]
-  };
-  var doughnutPieOptions = {
-    responsive: true,
-    animation: {
-      animateScale: true,
-      animateRotate: true
-    }
-  };
-  var multiAreaData = { // 필요함
-    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-    datasets: [{
-      label: 'Facebook',
-      data: [8, 11, 13, 15, 12, 13, 16, 15, 13, 19, 11, 14],
-      borderColor: ['rgba(255, 99, 132, 0.5)'],
-      backgroundColor: ['rgba(255, 99, 132, 0.5)'],
-      borderWidth: 1,
-      fill: true
-    },
-    ]
-  };
 
   if ($("#lineChart").length) {
     var lineChartCanvas = $("#lineChart").get(0).getContext("2d");
@@ -131,15 +55,6 @@ $(function () {
       type: 'line',
       data: data,
       options: options
-    });
-  }
-
-  if ($("#doughnutChart").length) {
-    var doughnutChartCanvas = $("#doughnutChart").get(0).getContext("2d");
-    var doughnutChart = new Chart(doughnutChartCanvas, {
-      type: 'doughnut',
-      data: doughnutPieData,
-      options: doughnutPieOptions
     });
   }
 

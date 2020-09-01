@@ -1,23 +1,23 @@
-package com.project.brunch.config.auth.provider;
+package com.project.brunch.config.oauth;
 
 import java.util.Map;
 
-public class GoogleUserInfo implements OAuth2UserInfo {
+public class FacebookUserInfo implements OAuth2UserInfo {
 
 	private Map<String, Object> attributes;
 	
-	public GoogleUserInfo(Map<String, Object> attributes) {
+	public FacebookUserInfo(Map<String, Object> attributes) {
 		this.attributes = attributes;
 	}
 	
 	@Override
 	public String getProviderId() {
-		return (String) attributes.get("sub");
+		return (String) attributes.get("id");
 	}
 
 	@Override
 	public String getProvider() {
-		return "google";
+		return "facebook";
 	}
 
 	@Override

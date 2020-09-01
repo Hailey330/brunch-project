@@ -1,4 +1,4 @@
-package com.project.brunch.controller;
+package com.project.brunch.web;
 
 import java.util.List;
 
@@ -26,10 +26,10 @@ import lombok.RequiredArgsConstructor;
 @CrossOrigin(origins = "/*")
 @RequestMapping("brunch") // 컨트롤러 진입 주소
 @RequiredArgsConstructor // final과 붙어있는 필드의 생성자를 다 만들어줌
-public class ViewController {
+public class AuthController {
 
 	
-	private static final Logger log = LoggerFactory.getLogger(ViewController.class);
+	private static final Logger log = LoggerFactory.getLogger(AuthController.class);
 
 	private final UserRepository userRepository;
 	private final PostRepository postRepository;
@@ -47,7 +47,6 @@ public class ViewController {
 		return "로그인 화면";
 	}
 	
-	// user정보 테스트
 	
 	
 	// User만 접근가능

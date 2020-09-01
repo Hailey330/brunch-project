@@ -1,4 +1,4 @@
-package com.project.brunch.dto;
+package com.project.brunch.web.dto;
 
 import java.util.Date;
 import java.util.Properties;
@@ -30,7 +30,7 @@ public class GoogleMailSend {
 		String subject = "Brunch 관리자";
 		String fromEmail = "admin@brunch.co.kr"; // 보낼 이메일 주소 
 		String fromUsername = "ADMIN";
-		String toEmail = mail; // 받을 이메일주소(테스트는 일단 내껄로 적고, 이후 테스트는 ajax에 할거라서 지워도될듯)
+		String toEmail = mail; // 받을 이메일주소
 		
 		final String username = "aryeong0325@gmail.com"; // google 계정
 		final String password = "ojyufezwgrrpnmat"; // 발급받은 앱 비밀번호

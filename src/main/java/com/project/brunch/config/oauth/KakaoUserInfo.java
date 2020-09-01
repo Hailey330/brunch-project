@@ -1,4 +1,4 @@
-package com.project.brunch.config.auth.provider;
+package com.project.brunch.config.oauth;
 
 import java.util.Map;
 

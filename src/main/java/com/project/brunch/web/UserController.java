@@ -1,4 +1,4 @@
-package com.project.brunch.controller;
+package com.project.brunch.web;
 
 import java.io.IOException;
 import java.util.List;
@@ -54,4 +54,10 @@ public class UserController {
 		
 		return userService.로그인유저찾기(email);
 	}
+	
+//	@PostMapping("/saveadmin")
+//	public String saveAdmin() {
+//		List<User> adminUser = User.builder()
+//				
+//	}
 }
