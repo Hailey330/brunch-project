@@ -2,6 +2,7 @@ package com.project.brunch.web.dto;
 
 import com.project.brunch.domain.user.UserRole;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;

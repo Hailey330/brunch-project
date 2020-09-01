@@ -8,7 +8,7 @@
     SELECT coverImg FROM post WEHRE id=#{id}
   </update>
   
-  <select id="PostList" resultType="com.project.brunch.dto.PostDto">
+  <select id="PostList" resultType="com.project.brunch.web.dto.PostDto">
   	SELECT p.id, p.content, p.coverImg, p.createDate, p.postType, p.readCount, p.subTitle, p.title, p.userId , u.nickname
 	FROM post p INNER JOIN user u
 	ON p.userid = u.id
@@ -20,7 +20,7 @@
   	  WHERE createDate > curdate( )
   </select>
   
-  <select id="findByreadCountRank" resultType="com.project.brunch.dto.AdminDto">
+  <select id="findByreadCountRank" resultType="com.project.brunch.web.dto.AdminDto">
   	SELECT p.createDate, p.readCount, p.title, u.nickname
 	FROM post p INNER JOIN user u
 	ON p.userid = u.id

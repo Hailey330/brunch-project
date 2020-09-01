@@ -1,4 +1,4 @@
-let index = {
+let index = { // 삭제하기 
    init: function(e){ // 이벤트 리스너 바인딩
       $(".btn-inverse-primary").on("click", (e) => { // ()안에 아무 변수가 들어가도 콜백시 그 자리에 오브젝트가 들어감
          this.deleteById(e);
@@ -24,5 +24,7 @@ let index = {
       })
    }// deleteById
 };
+
+
 
 index.init();

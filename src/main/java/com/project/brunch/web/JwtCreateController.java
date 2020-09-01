@@ -94,7 +94,7 @@ public class JwtCreateController {
 				.withSubject(userEntity.getSnsId())
 				.withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.EXPIRATION_TIME))
 				.withClaim("id", userEntity.getSnsId())
-				.withClaim("nickName", userEntity.getNickName())
+				.withClaim("snsId", userEntity.getSnsId())
 				.sign(Algorithm.HMAC512(JwtProperties.SECRET));
 		
 		CommonRespDto<?> respDto = CommonRespDto.builder()

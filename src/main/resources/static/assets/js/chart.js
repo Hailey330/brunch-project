@@ -5,7 +5,7 @@ $(function () {
    */
   'use strict';
   var data = {
-//    labels: ["8.20", "8.21", "8.22", "8.23", "8.24", "8.25"],
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
     datasets: [{
       label: '# of Votes',
       data: [10, 19, 3, 5, 2, 3], // 데이터 배열

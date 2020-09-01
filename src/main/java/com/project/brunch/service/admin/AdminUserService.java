@@ -81,5 +81,18 @@ public class AdminUserService {
 		return adminDto;
 	}
 	
+	@Transactional // user 검색기능 구현중
+	public List<User> searchUsers(String keyword) {
+		
+		List<User> userEntities = userRepository.findBynickName(keyword);
+		List<User> userList = userRepository.findAll();
+		
+		if (userEntities.isEmpty()) return userList;
+		
+		for (User user : userEntities) {
+//			userList.add(this.convertEntityToDto(user));
+		}
+		return userList;
+	}
 	
 }

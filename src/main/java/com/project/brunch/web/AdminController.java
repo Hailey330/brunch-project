@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.brunch.domain.post.Post;
@@ -20,6 +21,7 @@ import com.project.brunch.service.admin.AdminUserService;
 import com.project.brunch.web.dto.AdminDto;
 import com.project.brunch.web.dto.GoogleMailSend;
 import com.project.brunch.web.dto.PostDto;
+import com.project.brunch.web.dto.UserDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -39,12 +41,12 @@ public class AdminController {
 	private GoogleMailSend googleMailSend;
 	public static String useremail;
 	
-	@GetMapping("/admin")
+	@GetMapping("/admin/login")
 	public String adminLoginForm() {
 		return "adminlogin";
 	}	
 	
-	@GetMapping("/admin/dashboard")
+	@GetMapping("/admin")
 	public String dashboard(Model model, Model model2) {
 		
 		AdminDto adminDto = adminUserService.회원Count();
@@ -59,6 +61,15 @@ public class AdminController {
 		List<User> users = userRepository.findAll();
 		model.addAttribute("users", users);
 	
+		return "user";
+	}
+	
+	@GetMapping("/admin/usersearch") // admin 유저 검색
+	public String userSearch(@RequestParam(value = "keyword") String keyword, Model model) {
+		
+		List<User> userList = adminUserService.searchUsers(keyword);
+		model.addAttribute("userList", userList);
+		
 		return "user";
 	}
 	
