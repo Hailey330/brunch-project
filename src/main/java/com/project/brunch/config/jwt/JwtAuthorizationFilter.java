@@ -6,6 +6,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,6 +17,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.project.brunch.config.auth.PrincipalDetails;
+import com.project.brunch.config.auth.dto.LoginUser;
 import com.project.brunch.domain.user.User;
 import com.project.brunch.domain.user.UserRepository;
 
@@ -23,6 +25,7 @@ import com.project.brunch.domain.user.UserRepository;
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
 	private UserRepository userRepository;
+	private HttpSession session;
 	
 	public JwtAuthorizationFilter(AuthenticationManager authenticationManager, UserRepository userRepository) {
 		super(authenticationManager);
@@ -34,7 +37,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 			throws IOException, ServletException {
 		
 		String header = request.getHeader(JwtProperties.HEADER_STRING);
-		System.out.println("header  Authorization: " + header);
+		System.out.println("JwtAuthorizationFilter : header  Authorization: " + header);
 		
 		if (header == null || !header.startsWith(JwtProperties.TOKEN_PREFIX)) {
 			chain.doFilter(request, response);
@@ -49,7 +52,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 		// loadByUsername이 호출됨.
 		String snsId = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(token)
 				.getClaim("snsId").asString(); // getClaim을 snsId로 받는게 낫다..
-		System.out.println("JwtAuthorizationFilter : "+ snsId);
+//		System.out.println("JwtAuthorizationFilter : snsId : "+ snsId);
 		
 		if (snsId != null) {
 			User user = userRepository.findBySnsId(snsId);
@@ -63,6 +66,9 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 			
 			// 강제로 시큐리티의 세션에 접근해서 값 저장
 			SecurityContextHolder.getContext().setAuthentication(authentication);
+			session = request.getSession();
+			session.setAttribute("loginUser", new LoginUser(user));
+//			System.out.println("JwtAuthorizationFilter session 확인 : " + session);
 		}
 		chain.doFilter(request, response);
 	}

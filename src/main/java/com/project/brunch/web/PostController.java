@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.brunch.domain.post.Post;
 import com.project.brunch.domain.post.PostRepository;
 import com.project.brunch.domain.tag.Tag;
+import com.project.brunch.domain.tag.TagRepository;
 import com.project.brunch.service.PostService;
 import com.project.brunch.service.crawling.post.NowService;
 
@@ -27,7 +28,13 @@ import lombok.RequiredArgsConstructor;
 public class PostController {
 
 	private final PostRepository postRepository;
+	private final TagRepository tagRepository;
 	private final PostService postService;
+	
+	@GetMapping("tags")
+	public List<Tag> getTags() {
+		return tagRepository.findAll();
+	}
 	
 	@PostMapping("/post")
 	public @ResponseBody String post(@RequestBody Post post) {

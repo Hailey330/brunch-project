@@ -2,18 +2,19 @@ package com.project.brunch.web;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.brunch.config.auth.LoginUserAnnotation;
+import com.project.brunch.config.auth.dto.LoginUser;
 import com.project.brunch.domain.user.User;
 import com.project.brunch.domain.user.UserRepository;
+import com.project.brunch.domain.user.UserRole;
 import com.project.brunch.service.UserService;
 import com.project.brunch.service.crawling.user.NowCrawling;
 
@@ -29,7 +30,7 @@ public class UserController {
 	private final UserService userService;
 	
 	// 메인페이지 user정보 뿌리기 
-	@GetMapping("user")
+	@GetMapping("/user")
 	public List<User> homeUser() {
 		
 		return userService.목록보기();
@@ -49,15 +50,35 @@ public class UserController {
 		return "유저 저장완료";
 	}
 
-	@PostMapping("/user/{email}")
-	public User loginUser(@PathVariable String email) {
+	@GetMapping("/user/mainprofile")
+	public User loginUser(@LoginUserAnnotation LoginUser loginUser) {
 		
-		return userService.로그인유저찾기(email);
+		System.out.println("UserController : loginUser : " + loginUser.getId());
+		userService.로그인유저찾기(loginUser.getId());
+		
+		User user = User.builder()
+				.id(loginUser.getId())
+				.bio(loginUser.getBio())
+				.nickName(loginUser.getNickName())
+				.profileImage(loginUser.getProfileImage())
+				.build();
+		
+		return user;
 	}
 	
 //	@PostMapping("/saveadmin")
 //	public String saveAdmin() {
-//		List<User> adminUser = User.builder()
-//				
+//		List<User> adminUser = null;
+//		User admin = User.builder()
+//				.email("admin.brunch.co.kr")
+//				.profileImage("https://img1.daumcdn.net/thumb/C500x500.fpng/?fname=http://t1.daumcdn.net/brunch/service/user/2xr/image/lylAHyGq9DgVNt5QFKYhQBIYPko.png")
+//				.nickName("admin")
+//				.userRole(UserRole.ADMIN)
+//				.build();
+//		adminUser.add(admin);
+//		
+//		userRepository.saveAll(adminUser);
+//		
+//		return "어드민 저장완료";
 //	}
 }

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.project.brunch.config.auth.GoogleMailSend;
 import com.project.brunch.domain.post.Post;
 import com.project.brunch.domain.post.PostMapper;
 import com.project.brunch.domain.post.PostRepository;
@@ -30,7 +29,6 @@ public class AdminUserService {
 	@Autowired 
 	private PostMapper postMapper;
 	
-	private GoogleMailSend googleMailSend;
 	
 	@Transactional
 	public String 이메일찾기(int id) {

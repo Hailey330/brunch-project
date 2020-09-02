@@ -8,6 +8,4 @@ public interface UserRepository extends JpaRepository<User, Integer>{
 	
 	public User findBySnsId(String snsId);
 	public List<User> findBynickName(String keyword);
-
-
 }

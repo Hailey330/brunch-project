@@ -22,8 +22,10 @@ public class UserService {
 	private UserMapper userMapper;
 	
 	@Transactional(readOnly = true)
-	public User 로그인유저찾기(String email) {
-		return userMapper.findByUserEmail(email);
+	public Optional<User> 로그인유저찾기(int loginUser) {
+		
+		Optional<User> userEntity = userRepository.findById(loginUser);
+		return userEntity;
 	}
 	
 	@Transactional(readOnly = true)

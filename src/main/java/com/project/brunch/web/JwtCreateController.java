@@ -35,9 +35,9 @@ public class JwtCreateController {
 	@PostMapping("/oauth/jwt/kakao") 
 	public String jwtCreate(@RequestBody Map<String, Object> data) {
 		System.out.println("jwtCreate 실행됨");
-		System.out.println(data);  
+//		System.out.println("JwtCreateController : data : "+data);  
 		
-		KakaoUserInfo kakaoUser = new KakaoUserInfo((Map<String, Object>)data); // data 값 봐야하고 
+		KakaoUserInfo kakaoUser = new KakaoUserInfo((Map<String, Object>)data); 
 		
 		User userEntity = userRepository.findBySnsId(kakaoUser.getProvider()+"_"+kakaoUser.getProviderId());
 		
