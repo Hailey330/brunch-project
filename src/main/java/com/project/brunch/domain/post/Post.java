@@ -28,7 +28,7 @@ public class Post {
 	private int userId;
 	private String title;
 	private String subTitle;
-	
+
 	@Lob
 	private String content; // 내용
 	@Lob

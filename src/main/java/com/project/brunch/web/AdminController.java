@@ -30,73 +30,89 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("brunch") // 컨트롤러 진입 주소
 @RequiredArgsConstructor // final과 붙어있는 필드의 생성자를 다 만들어줌
 public class AdminController {
-	
+
 	private final UserRepository userRepository;
 	private final PostRepository postRepository;
 	private final AdminUserService adminUserService;
 	private final AdminPostService adminPostService;
-	
-	
+
 	private PostDto postDto;
 	private GoogleMailSend googleMailSend;
 	public static String useremail;
+
 	
+	// 관리자 로그인 
 	@GetMapping("/admin/login")
 	public String adminLoginForm() {
+		
 		return "adminlogin";
-	}	
-	
+	}
+
+	// 관리자 메인 대시보드 
 	@GetMapping("/admin")
 	public String dashboard(Model model, Model model2) {
-		
 		AdminDto adminDto = adminUserService.회원Count();
 		List<Post> readCountRank = adminPostService.readCountRank목록보기();
-		model.addAttribute("adminDto" , adminDto).addAttribute("readCountRank", readCountRank);		
+		model.addAttribute("adminDto", adminDto).addAttribute("readCountRank", readCountRank);
 		
 		return "dashboard";
 	}
-	
-	@GetMapping("/admin/user") // user 페이지에 유저들 뿌리기 
+
+	// 관리자 유저 목록 뿌리기 - 페이징 구현중
+	@GetMapping("/admin/user")
 	public String userForm(Model model) {
 		List<User> users = userRepository.findAll();
 		model.addAttribute("users", users);
-	
+
 		return "user";
 	}
-	
-	@GetMapping("/admin/usersearch") // admin 유저 검색
+
+	// 관리자 유저 목록 검색하기
+	@GetMapping("/admin/usersearch")
 	public String userSearch(@RequestParam(value = "keyword") String keyword, Model model) {
-		
 		List<User> userList = adminUserService.searchUsers(keyword);
 		model.addAttribute("userList", userList);
-		
+
 		return "user";
 	}
-	
-	@DeleteMapping("/admin/user/{id}") // user삭제시 메일전송 후 삭제
+
+	// 관리자 유저 삭제 - 메일 전송 날리기 완료
+	@DeleteMapping("/admin/user/{id}")
 	public @ResponseBody int deleteById(@PathVariable int id) {
-		// 이메일 가져오기
-		useremail =adminUserService.이메일찾기(id);
 		
+		// 이메일 가져오기
+		useremail = adminUserService.이메일찾기(id);
+
 		googleMailSend = new GoogleMailSend();
 		googleMailSend.sendMail(useremail);
-		
 		adminUserService.삭제하기(id);
+		
 		return id;
 	}
-	
+
+	// 관리자 포스팅 목록 뿌리기 - 페이징 구현중
 	@GetMapping("/admin/post")
-	public String postForm() {
+	public String postForm(Model model, @RequestParam(value = "page", defaultValue = "1") Integer pageNum) {
+		List<Post> postList = adminPostService.getPostList(pageNum);
+		
 		return "post";
-	}	
+	}
+
+	// 관리자 포스팅 삭제 - 메일 전송 날리기 구현중
+	@DeleteMapping("/admin/post/del/{id}")
+	public @ResponseBody int delete(@PathVariable int id) {
+		adminPostService.delete(id);
+		
+		return id;
+	}
 	
 	@GetMapping("/admin/main")
 	public String adminMainForm() {
 		return "main";
-	}	
-	
+	}
+
 	@GetMapping("/admin/comment")
 	public String adminCommentForm() {
 		return "comment";
-	}	
+	}
 }

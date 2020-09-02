@@ -1,4 +1,4 @@
-package com.project.brunch.test.service.crawling.post;
+package com.project.brunch.test.service;
 
 import java.util.List;
 

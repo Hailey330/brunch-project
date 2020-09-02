@@ -29,13 +29,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor // final과 붙어있는 필드의 생성자를 다 만들어줌
 public class JwtCreateController {
 
+	private String TAG = "< JwtCreateController >";
 	private final UserRepository userRepository;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	
+	// 리액트 OAuth2.0 - jwt token 생성 
 	@PostMapping("/oauth/jwt/kakao") 
-	public String jwtCreate(@RequestBody Map<String, Object> data) {
-		System.out.println("jwtCreate 실행됨");
-//		System.out.println("JwtCreateController : data : "+data);  
+	public String jwtCreateReact(@RequestBody Map<String, Object> data) {
+		System.out.println(TAG + "jwtCreateReact() 실행");
+		System.out.println(TAG + "data 값 확인 : " + data);
 		
 		KakaoUserInfo kakaoUser = new KakaoUserInfo((Map<String, Object>)data); 
 		
@@ -68,10 +70,11 @@ public class JwtCreateController {
 		return jwtToken;
 	}
 	
+	// 안드로이드 OAuth2.0 - jwt token 생성 
 	@PostMapping("/oauth/jwt/kakao/android") 
 	public CommonRespDto<?> jwtCreateAndroid(@RequestBody Map<String, Object> data) {
-		System.out.println("jwtCreate 실행됨");
-		System.out.println("data ::: " + data);
+		System.out.println(TAG + "jwtCreateAndroid() 실행");
+		System.out.println(TAG + "data 값 확인 : " + data);
 		
 		OAuth2UserInfo kakaoUser = new KakaoUserInfo((Map<String, Object>) data);
 		
