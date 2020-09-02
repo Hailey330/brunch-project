@@ -1,4 +1,4 @@
-package com.project.brunch.test.service;
+package com.project.brunch.test;
 
 import java.util.ArrayList;
 import java.util.List;

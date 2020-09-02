@@ -1,4 +1,4 @@
-package com.project.brunch.web.dto;
+package com.project.brunch.util;
 
 import java.util.Date;
 import java.util.Properties;

@@ -1,4 +1,4 @@
-package com.project.brunch.web.dto;
+package com.project.brunch.web.dto.user;
 
 import com.project.brunch.domain.user.UserRole;
 
@@ -13,7 +13,7 @@ public class UserDto {
 
 	private int id;
 	private String password;
-	private String snsId; // @앞 아이디 파싱한거
+	private String snsId;
 	private String nickName;
 	private String email;
 	private String bio; 

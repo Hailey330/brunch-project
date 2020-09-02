@@ -2,17 +2,15 @@ package com.project.brunch.service.admin;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.project.brunch.domain.admin.AdminMapper;
 import com.project.brunch.domain.post.Post;
-import com.project.brunch.domain.post.PostMapper;
 import com.project.brunch.domain.post.PostRepository;
 import com.project.brunch.domain.user.User;
-import com.project.brunch.domain.user.UserMapper;
 import com.project.brunch.domain.user.UserRepository;
-import com.project.brunch.web.dto.AdminDto;
+import com.project.brunch.web.dto.admin.AdminDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,13 +21,12 @@ public class AdminUserService {
 	private String TAG = "< AdminUserService >";
 	private final UserRepository userRepository;
 	private final PostRepository postRepository;
-	private final UserMapper userMapper;
-	private final PostMapper postMapper;
+	private final AdminMapper adminMapper;
 
 	// By_아령
 	@Transactional
 	public String 이메일찾기(int id) {
-		User user = userMapper.findByDelUserEmail(id);
+		User user = adminMapper.findByDelUserEmail(id);
 		user.getEmail();
 		System.out.println(TAG + "이메일찾기 : " + user);
 		return user.getEmail();
@@ -58,7 +55,7 @@ public class AdminUserService {
 
 		// 오늘 올라온 글 수
 		try {
-			List<Post> todayPostEntity = postMapper.findByTodayPost();
+			List<Post> todayPostEntity = adminMapper.findByTodayPost();
 			todayPostCount = todayPostEntity.size();
 
 		} catch (Exception e) {

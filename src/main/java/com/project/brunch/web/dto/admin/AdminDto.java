@@ -1,4 +1,4 @@
-package com.project.brunch.web.dto;
+package com.project.brunch.web.dto.admin;
 
 
 import java.sql.Timestamp;

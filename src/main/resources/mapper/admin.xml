@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.project.brunch.domain.admin.AdminMapper">
+  
+  	<!-- findByTodayPost : 오늘 올라온 포스팅 목록 뿌리기 -->
+  	<select id ="findByTodayPost" resultType="com.project.brunch.domain.post.Post">
+	  	SELECT * 
+	  	FROM post 
+	  	WHERE createDate > curdate( )
+  	</select>
+  
+  	<!-- findByReadCountRank : 포스팅별 조회수 랭킹 뿌리기 -->
+  	<select id="findByReadCountRank" resultType="com.project.brunch.web.dto.admin.AdminDto">
+  		SELECT p.createDate, p.readCount, p.title, u.nickname
+		FROM post p INNER JOIN user u
+		ON p.userid = u.id
+		order by readCount desc
+		limit 5
+ 	 </select>
+ 	 
+ 	 <!-- findByDelUserEmail -->
+ 	<select id="findByDelUserEmail" resultType="com.project.brunch.domain.user.User">
+  		SELECT email From user WHERE id = #{id}
+  	</select>
+  	
+  	<select id="findByUserEmail" resultType="com.project.brunch.domain.user.User">
+  		SELECT * FROM user WHERE email =#{email}
+ 	</select>
+  
+  
+  
+</mapper>

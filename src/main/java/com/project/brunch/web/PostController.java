@@ -1,9 +1,7 @@
 package com.project.brunch.web;
 
-import java.io.IOException;
 import java.util.List;
 
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,64 +10,42 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.brunch.config.auth.LoginUserAnnotation;
+import com.project.brunch.config.auth.dto.LoginUser;
 import com.project.brunch.domain.post.Post;
 import com.project.brunch.domain.post.PostRepository;
-import com.project.brunch.domain.tag.Tag;
 import com.project.brunch.domain.tag.TagRepository;
 import com.project.brunch.service.PostService;
-import com.project.brunch.service.crawling.post.NowService;
 
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @CrossOrigin(origins = "/*")
-@RequestMapping("brunch") // 컨트롤러 진입 주소
-@RequiredArgsConstructor // final과 붙어있는 필드의 생성자를 다 만들어줌
+@RequestMapping("brunch") 
+@RequiredArgsConstructor 
 public class PostController {
 
 	private final PostRepository postRepository;
-	private final TagRepository tagRepository;
 	private final PostService postService;
-	
-	@GetMapping("tags")
-	public List<Tag> getTags() {
-		return tagRepository.findAll();
+
+	// 로그인한 유저의 포스팅 저장하기
+	@PostMapping("/post/save")
+	public @ResponseBody Post postSave(@RequestBody Post post, @LoginUserAnnotation LoginUser loginUser) {
+		return postRepository.save(post);
 	}
-	
-	@PostMapping("/post")
-	public @ResponseBody String post(@RequestBody Post post) {
-		
-		postRepository.save(post);
-		return "글쓰기 완료";
-	}
-	
-	@GetMapping("/saveposts")
-	public String getPosts(NowService nowService) {
-		List<Post> posts = null;
-		try {
-			posts = nowService.getBrunchDatas();
-			System.out.println("savePost : " + posts);
-			postRepository.saveAll(posts);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return "크롤링 포스트 저장 완료";
-	}
-	
-	@PostMapping("/tag")
-	public String keyword(@RequestBody Tag tag) {
-		return "태그 완료";
-	}
-	
-	@GetMapping("/posts")
-	public List<Post> getpost() {
+
+	// 포스팅 전체 목록 뿌리기
+	@GetMapping("/post/list")
+	public List<Post> postList() {
 		return postRepository.findAll();
 	}
-	
-	@GetMapping("/postlist")
-	public List<Post> getPosts(){ // requestDispatcher
-		return postService.목록보기();
 
+	// By_민경
+	// 포스팅 메인 페이지 Dto 뿌리기
+	// 안드로이드 주소 맞추기 main/post -> post/main
+	@GetMapping("/post/main")
+	public List<Post> postMain() {
+		return postService.메인목록();
 	}
-	
+
 }

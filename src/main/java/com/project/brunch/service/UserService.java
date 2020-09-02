@@ -1,15 +1,18 @@
 package com.project.brunch.service;
 
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
+import java.util.function.Supplier;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.project.brunch.config.auth.dto.LoginUser;
+import com.project.brunch.config.handler.exception.MyUserIdNotFoundException;
 import com.project.brunch.domain.user.User;
 import com.project.brunch.domain.user.UserMapper;
 import com.project.brunch.domain.user.UserRepository;
+import com.project.brunch.web.dto.user.UserNavProfileRespDto;
+import com.project.brunch.web.dto.user.UserProfileRespDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,43 +23,47 @@ public class UserService {
 	private final UserRepository userRepository;
 	private final UserMapper userMapper;
 
-	// By_민경
 	@Transactional
-	public void 수정하기(Map<String, Object> data, int userId) {
+	public UserProfileRespDto 프로필수정하기(Map<String, Object> data, LoginUser loginUser) {
 		
 		String bio = (String) data.get("bio");
 		String nickName = (String) data.get("nickName");
 		String profileImage = (String) data.get("profileImage");
 		
-		// 여기서 받아서 DB update 쿼리 날리고 
-		User userEntity = User.builder()
-				.id(userId)
+		UserProfileRespDto userProfileRespDto = UserProfileRespDto.builder()
+				.id(loginUser.getId())
 				.nickName(nickName)
 				.bio(bio)
 				.profileImage(profileImage)
 				.build();
 		
-		userMapper.update(userEntity);
+		userMapper.update(userProfileRespDto);
+		
+		return userProfileRespDto;
 	}
 
-	// By_아령
 	@Transactional(readOnly = true)
-	public Optional<User> 로그인유저찾기(int loginUser) {
+	public UserNavProfileRespDto 로그인유저찾기(LoginUser loginUser) {
+		// 1. User 찾기
+		User userEntity = userRepository.findById(loginUser.getId())
+				.orElseThrow(new Supplier<MyUserIdNotFoundException>() {
 
-		Optional<User> userEntity = userRepository.findById(loginUser);
-		return userEntity;
+			@Override
+			public MyUserIdNotFoundException get() {
+				return new MyUserIdNotFoundException();
+			}
+		});
+		
+		// 2. nickName, profileImage 꺼내오기 
+		String nickName = userEntity.getNickName();
+		String profileImage = userEntity.getProfileImage();
+		
+		UserNavProfileRespDto userNavProfileRespDto = UserNavProfileRespDto.builder()
+				.nickName(nickName)
+				.profileImage(profileImage)
+				.build();
+		
+		return userNavProfileRespDto;
 	}
-	
-	// By_아령
-	@Transactional(readOnly = true)
-	public List<User> 목록보기() {
 
-		try {
-			return userMapper.findByUser();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return null;
-	}
 }

@@ -1,7 +1,6 @@
-package com.project.brunch.web.dto;
+package com.project.brunch.web.dto.post;
 
-import com.project.brunch.domain.post.Post;
-import com.project.brunch.domain.user.User;
+import java.security.Timestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,11 +11,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Builder
-public class PostDto {
+public class PostRespDto {
 	
 	private int id;
 	private String title;
 	private String content;
 	private String nickName;
 	private String coverImg;
+	private Timestamp createDate;
 }

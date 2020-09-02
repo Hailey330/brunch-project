@@ -9,11 +9,6 @@ public interface PostMapper {
 	public List<Post> findAllPost();
 
 	// By_아령
-	void UpdateByPost(int id) throws Exception;
-
-	List<Post> PostList() throws Exception;
-
-	List<Post> findByTodayPost() throws Exception;
-
-	List<Post> findByreadCountRank() throws Exception;
+	public void updateByPost(int id);
+	
 }

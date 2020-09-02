@@ -12,8 +12,8 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @CrossOrigin(origins = "/*")
-@RequestMapping("brunch") // 컨트롤러 진입 주소
-@RequiredArgsConstructor // final과 붙어있는 필드의 생성자를 다 만들어줌
+@RequestMapping("brunch") 
+@RequiredArgsConstructor 
 public class AuthController {
 	
 	// 모든 사람이 접근 가능

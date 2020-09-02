@@ -1,4 +1,4 @@
-package com.project.brunch.test.service;
+package com.project.brunch.test;
 
 import java.io.IOException;
 import java.util.ArrayList;

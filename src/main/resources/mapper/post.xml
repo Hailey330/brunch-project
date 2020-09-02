@@ -4,28 +4,19 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.project.brunch.domain.post.PostMapper">
-  <update id="UpdateByPost">
-    SELECT coverImg FROM post WEHRE id=#{id}
-  </update>
   
-  <select id="PostList" resultType="com.project.brunch.web.dto.PostDto">
-  	SELECT p.id, p.content, p.coverImg, p.createDate, p.postType, p.readCount, p.subTitle, p.title, p.userId , u.nickname
-	FROM post p INNER JOIN user u
-	ON p.userid = u.id
-  </select>
+  	<!-- findAllPost : 메인 포스트 목록 뿌리기 -->
+	<select id="findAllPost" resultType="com.project.brunch.web.dto.post.PostRespDto"> 
+			SELECT * FROM post p INNER JOIN user u
+	</select>
   
-  <select id ="findByTodayPost" resultType="com.project.brunch.domain.post.Post">
-  	  SELECT * 
-  	  FROM post 
-  	  WHERE createDate > curdate( )
-  </select>
+ 	<!-- 작가의 서랍 포스트 목록 뿌릴 때 사용하기
+	<select id="findByWriterPost" resultType="com.project.brunch.web.dto.PostRespDto"> 
+			SELECT * FROM post p INNER JOIN user u ON p.userId = u.id
+	</select> -->
   
-  <select id="findByreadCountRank" resultType="com.project.brunch.web.dto.AdminDto">
-  	SELECT p.createDate, p.readCount, p.title, u.nickname
-	FROM post p INNER JOIN user u
-	ON p.userid = u.id
-	order by readCount desc
-	limit 5
-  </select>
+	<update id="updateByPost">
+		SELECT coverImg FROM post WEHRE id=#{id}
+	</update>
   
 </mapper>

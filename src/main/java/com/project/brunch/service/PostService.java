@@ -24,15 +24,4 @@ public class PostService {
 		return postMapper.findAllPost();
 	}
 
-	// By_아령
-	@Transactional(readOnly = true)
-	public List<Post> 목록보기() {
-		try {
-			return postMapper.PostList();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
 }
