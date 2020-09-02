@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,7 +13,6 @@ import com.project.brunch.config.auth.LoginUserAnnotation;
 import com.project.brunch.config.auth.dto.LoginUser;
 import com.project.brunch.domain.user.User;
 import com.project.brunch.domain.user.UserRepository;
-import com.project.brunch.domain.user.UserRole;
 import com.project.brunch.service.UserService;
 import com.project.brunch.service.crawling.user.NowCrawling;
 
@@ -29,7 +27,7 @@ public class UserController {
 	private final UserRepository userRepository;
 	private final UserService userService;
 	
-	// 메인페이지 user정보 뿌리기 
+	// 리액트 Main User뿌리기 / Android 브런치나우 작가목록(태그별)
 	@GetMapping("/user")
 	public List<User> homeUser() {
 		
@@ -50,7 +48,8 @@ public class UserController {
 		return "유저 저장완료";
 	}
 
-	@GetMapping("/user/mainprofile")
+	// 리액트, android 네브 속 유저 정보 / 유저 프로필 편집 (공통)
+	@GetMapping("/user/profile")
 	public User loginUser(@LoginUserAnnotation LoginUser loginUser) {
 		
 		System.out.println("UserController : loginUser : " + loginUser.getId());
