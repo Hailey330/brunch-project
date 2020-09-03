@@ -23,6 +23,12 @@ public class UserService {
 	private final UserRepository userRepository;
 	private final UserMapper userMapper;
 
+	@Transactional(readOnly = true)
+	public UserProfileRespDto 작가프로필(int id, LoginUser loginUser) {
+		return null;
+	}
+	
+	
 	@Transactional
 	public UserProfileRespDto 프로필수정하기(Map<String, Object> data, LoginUser loginUser) {
 		

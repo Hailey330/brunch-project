@@ -1,15 +1,14 @@
 package com.project.brunch.web;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.brunch.config.auth.LoginUserAnnotation;
@@ -17,7 +16,6 @@ import com.project.brunch.config.auth.dto.LoginUser;
 import com.project.brunch.domain.user.User;
 import com.project.brunch.domain.user.UserRepository;
 import com.project.brunch.service.UserService;
-import com.project.brunch.service.crawling.user.NowCrawling;
 import com.project.brunch.web.dto.user.UserNavProfileRespDto;
 import com.project.brunch.web.dto.user.UserProfileRespDto;
 
@@ -33,10 +31,16 @@ public class UserController {
 	private final UserRepository userRepository;
 	private final UserService userService;
 
+	// 유저 프로필 정보 뿌리기
+	@GetMapping("/user/{id}")
+	public UserProfileRespDto userProfile(@PathVariable int id, @LoginUserAnnotation LoginUser loginUser) {
+		UserProfileRespDto userProfileRespDto = userService.작가프로필(id, loginUser);
+		return userProfileRespDto;
+	}
+	
 	// 로그인한 유저 정보 뿌리기 (nav bar)
 	@GetMapping("/user/loginUser")
 	public UserNavProfileRespDto userNavProfile(@LoginUserAnnotation LoginUser loginUser) {
-		System.out.println(TAG + "userLogin() loginUser 아이디 확인 : " + loginUser.getId());
 		UserNavProfileRespDto userNavProfileRespDto = userService.로그인유저찾기(loginUser);
 		return userNavProfileRespDto;
 	}
@@ -49,24 +53,10 @@ public class UserController {
 		return userProfileRespDto;
 	}
 
-	// 리액트 메인 페이지에 User 뿌리기 + 안드로이드 브런치나우 태그별 작가 목록 뿌리기
+	// 전체 유저 목록 뿌리기
 	@GetMapping("/user/list")
 	public List<User> userList() {
 		return userRepository.findAll();
-	}
-
-	// 브런치 유저 크롤링 -> 추후 삭제
-	@GetMapping("/user/craw/save")
-	public @ResponseBody String userSave(NowCrawling nowCrawling) {
-		List<User> users;
-		try {
-			users = nowCrawling.getNowCrawling();
-			userRepository.saveAll(users);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return "크롤링 유저 저장완료";
 	}
 
 //	@PostMapping("/saveadmin")

@@ -24,7 +24,7 @@ import com.project.brunch.domain.user.UserRepository;
 // 인가
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
-	private String TAG = "< JwtAuthorizationFilter >";
+	private String TAG = "< JwtAuthorizationFilter > ";
 	private UserRepository userRepository;
 	private HttpSession session;
 
