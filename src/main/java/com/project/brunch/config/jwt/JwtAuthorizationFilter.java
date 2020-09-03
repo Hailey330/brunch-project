@@ -67,7 +67,6 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 			session = request.getSession();
 			session.setAttribute("loginUser", new LoginUser(user));
-			System.out.println(TAG + "Session : " + session);
 		}
 		chain.doFilter(request, response);
 	}

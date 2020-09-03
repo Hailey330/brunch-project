@@ -3,7 +3,6 @@ package com.project.brunch.web;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,7 +34,7 @@ public class UserController {
 	private final UserService userService;
 
 	// 로그인한 유저 정보 뿌리기 (nav bar)
-	@GetMapping("/user/nav")
+	@GetMapping("/user/loginUser")
 	public UserNavProfileRespDto userNavProfile(@LoginUserAnnotation LoginUser loginUser) {
 		System.out.println(TAG + "userLogin() loginUser 아이디 확인 : " + loginUser.getId());
 		UserNavProfileRespDto userNavProfileRespDto = userService.로그인유저찾기(loginUser);
