@@ -16,6 +16,7 @@ public class LoginUser {
 	private String providerId;
 	private String profileImage;
 	private String bio;
+	private String userId;
 
 	public LoginUser(User user) {
 		this.id = user.getId();

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.brunch.config.auth.LoginUserAnnotation;
 import com.project.brunch.config.auth.dto.LoginUser;
 import com.project.brunch.domain.post.Post;
 import com.project.brunch.domain.post.PostRepository;
@@ -42,8 +43,8 @@ public class PostController {
 	}
 	
 	// react, android : 글쓰기
-	@PostMapping("/post")
-	public @ResponseBody String post(@RequestBody Post post, LoginUser loginUser) {
+	@PostMapping("/post/save")
+	public @ResponseBody String post(@RequestBody Post post, @LoginUserAnnotation LoginUser loginUser) {
 		
 		System.out.println("PostController : loginUser : " + loginUser.getId());
 		Post savePost = Post.builder()
@@ -90,6 +91,19 @@ public class PostController {
 	public List<Post> getPosts(){ // requestDispatcher
 		return postService.목록보기();
 
+	}
+	
+	@GetMapping("/post/writer")
+	public List<Post> getWriterPost(@LoginUserAnnotation LoginUser loginUser) {
+		
+		return postService.작가의서랍(loginUser.getId());
+	}
+	
+	// react : (메인)태그별글목록 , android : (브런치나우) 태그별 글목록
+	@GetMapping("/post/list/{tag}") 
+	public List<Post> getTagPostList(String tag) {
+		
+		return postService.태그별글목록(tag);
 	}
 	
 }
