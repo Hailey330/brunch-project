@@ -24,7 +24,22 @@ public class UserService {
 	private final UserMapper userMapper;
 
 	@Transactional(readOnly = true)
-	public UserProfileRespDto 작가프로필(int id, LoginUser loginUser) {
+	public UserProfileRespDto 유저프로필(LoginUser loginUser) {
+		
+		int followerCount;
+		int followingCount;
+		boolean followState;
+		
+		// 1. 유저찾기 
+		User userEntity = userRepository.findById(loginUser.getId())
+				.orElseThrow(new Supplier<MyUserIdNotFoundException>() {
+
+			@Override
+			public MyUserIdNotFoundException get() {
+				return new MyUserIdNotFoundException();
+			}
+		});
+		
 		return null;
 	}
 	

@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,12 +31,12 @@ public class UserController {
 	private final UserService userService;
 
 	// 유저 프로필 정보 뿌리기
-	@GetMapping("/user/{id}")
-	public UserProfileRespDto userProfile(@PathVariable int id, @LoginUserAnnotation LoginUser loginUser) {
-		UserProfileRespDto userProfileRespDto = userService.작가프로필(id, loginUser);
+	@GetMapping("/user/proflie")
+	public UserProfileRespDto userProfile(@LoginUserAnnotation LoginUser loginUser) {
+		UserProfileRespDto userProfileRespDto = userService.유저프로필(loginUser);
 		return userProfileRespDto;
 	}
-	
+
 	// 로그인한 유저 정보 뿌리기 (nav bar)
 	@GetMapping("/user/loginUser")
 	public UserNavProfileRespDto userNavProfile(@LoginUserAnnotation LoginUser loginUser) {
@@ -74,5 +73,5 @@ public class UserController {
 //		
 //		return "어드민 저장완료";
 //	}
-	
+
 }
