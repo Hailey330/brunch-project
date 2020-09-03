@@ -14,7 +14,6 @@ import com.project.brunch.config.auth.LoginUserAnnotation;
 import com.project.brunch.config.auth.dto.LoginUser;
 import com.project.brunch.domain.post.Post;
 import com.project.brunch.domain.post.PostRepository;
-import com.project.brunch.domain.tag.TagRepository;
 import com.project.brunch.service.PostService;
 
 import lombok.RequiredArgsConstructor;

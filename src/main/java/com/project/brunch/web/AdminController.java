@@ -87,14 +87,36 @@ public class AdminController {
 		return id;
 	}
 
-	// 관리자 포스팅 목록 뿌리기 - 페이징 구현중
+	// 관리자 포스팅 목록 뿌리기 - 페이징 없음
 	@GetMapping("/admin/post")
-	public String adminPostList(Model model, @RequestParam(value = "page", defaultValue = "1") Integer pageNum) {
-		List<Post> postList = adminPostService.getPostList(pageNum);
+	public String testPostForm(Model model) {
+
+		List<Post> posts = postRepository.findAll();
+		model.addAttribute("posts", posts);
 
 		return "post";
 	}
-
+	
+	// 관리자 포스팅 목록 뿌리기 - 페이징 구현중
+	//	@GetMapping("/admin/post")
+	//	public String adminPostList(Model model, @RequestParam(value = "page", defaultValue = "1") Integer pageNum) {
+	//		List<Post> postList = adminPostService.getPostList(pageNum);
+	//		return "post";
+	//	}
+	
+	//	페이징 처리 로직 짜는중 1
+	//	@GetMapping("/admin/post")
+	//	public String postForm(Model model, @PageableDefault(sort= {"id"}, direction = Direction.DESC, size = 5) Pageable pageable) {
+	//		
+	//		Page<Post> posts = postRepository.findAll(pageable);
+	//		model.addAttribute("posts", posts);
+	//		System.out.println("getNumber()"+posts.getNumber());
+	//		System.out.println("getNumberOfElements()"+posts.getNumberOfElements());
+	//
+	//		
+	//		return "post";
+	//	}
+	
 	// 관리자 포스팅 삭제 - 메일 전송 날리기 구현중
 	@DeleteMapping("/admin/post/del/{id}")
 	public @ResponseBody int adminPostDelete(@PathVariable int id) {

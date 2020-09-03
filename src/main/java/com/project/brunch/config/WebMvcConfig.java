@@ -26,11 +26,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	private final HttpSession httpSession;
 
 	// 관리자 페이지
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(new RoleInterceptor())
-			.addPathPatterns("/brunch/admin/**");
-	}
+//	@Override
+//	public void addInterceptors(InterceptorRegistry registry) {
+//		registry.addInterceptor(new RoleInterceptor())
+//			.addPathPatterns("/brunch/admin/**");
+//	}
 	
 	// @LoginUserAnnotation 
 	@Override

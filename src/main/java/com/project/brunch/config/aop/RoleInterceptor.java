@@ -26,8 +26,8 @@ public class RoleInterceptor extends HandlerInterceptorAdapter {
 //			if (!principal.getRole().equals("ROLE_ADMIN")) {
 //				System.out.println("RoleIntercepter : 권한이 없습니다.");
 //				throw new MyRoleException();
-//			}
-		}
+			}
+//		}
 		
 		return true;
 	}
