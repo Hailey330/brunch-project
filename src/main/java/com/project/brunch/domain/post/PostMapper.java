@@ -10,5 +10,7 @@ public interface PostMapper {
 
 	// By_아령
 	public void updateByPost(int id);
-	
+	List<Post> findBy작가의서랍(int id);
+	List<Post> findBy태그(String tag);
+
 }

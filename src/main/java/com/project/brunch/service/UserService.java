@@ -53,7 +53,6 @@ public class UserService {
 				return new MyUserIdNotFoundException();
 			}
 		});
-		
 		// 2. nickName, profileImage 꺼내오기 
 		String nickName = userEntity.getNickName();
 		String profileImage = userEntity.getProfileImage();

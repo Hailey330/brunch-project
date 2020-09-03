@@ -29,7 +29,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor 
 public class JwtCreateController {
 
-	private String TAG = "< JwtCreateController >";
+	private String TAG = "< JwtCreateController > ";
 	private final UserRepository userRepository;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	

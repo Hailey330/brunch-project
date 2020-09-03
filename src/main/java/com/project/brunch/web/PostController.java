@@ -20,8 +20,8 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @CrossOrigin(origins = "/*")
-@RequestMapping("brunch") 
-@RequiredArgsConstructor 
+@RequestMapping("brunch")
+@RequiredArgsConstructor
 public class PostController {
 
 	private final PostRepository postRepository;
@@ -29,8 +29,21 @@ public class PostController {
 
 	// 로그인한 유저의 포스팅 저장하기
 	@PostMapping("/post/save")
-	public @ResponseBody Post postSave(@RequestBody Post post, @LoginUserAnnotation LoginUser loginUser) {
-		return postRepository.save(post);
+	public @ResponseBody String postSave(@RequestBody Post post, @LoginUserAnnotation LoginUser loginUser) {
+		postService.글저장(post, loginUser);
+		return "글 저장에 성공했습니다.";
+	}
+
+	// 작가의 서랍 글 목록 뿌리기
+	@GetMapping("/post/writer")
+	public List<Post> getWriterPost(@LoginUserAnnotation LoginUser loginUser) {
+		return postService.작가의서랍(loginUser.getId());
+	}
+
+	// 태그별 글 목록 뿌리기
+	@GetMapping("/post/list/{tag}")
+	public List<Post> getTagPostList(String tag) {
+		return postService.태그별글목록(tag);
 	}
 
 	// 포스팅 전체 목록 뿌리기
@@ -39,7 +52,6 @@ public class PostController {
 		return postRepository.findAll();
 	}
 
-	// By_민경
 	// 포스팅 메인 페이지 Dto 뿌리기
 	// 안드로이드 주소 맞추기 main/post -> post/main
 	@GetMapping("/post/main")

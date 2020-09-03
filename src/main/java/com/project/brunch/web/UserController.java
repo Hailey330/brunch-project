@@ -30,7 +30,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserController {
 
-	private String TAG = "< UserController >";
+	private String TAG = "< UserController > ";
 	private final UserRepository userRepository;
 	private final UserService userService;
 
