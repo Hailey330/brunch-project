@@ -22,7 +22,7 @@
   	</select>
   
  	<select id="findBy태그" resultType="com.project.brunch.domain.post.Post">
-	     SELECT p.title, p.coverImg, p.subTitle, p.content, p.createDate, u.nickname, t.tag
+	     SELECT p.title, p.coverImg, p.subTitle, p.content, p.createDate, u.nickname, t.tag, u.profileImage
 	  	 FROM post p INNER JOIN tag t INNER JOIN user u
 	 	 ON t.postId = p.id AND u.Id = p.userId AND t.tag=#{tag}
  	</select>

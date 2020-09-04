@@ -51,7 +51,11 @@ public class AdminController {
 	public String adminDashForm(Model model, Model model2) {
 		AdminDto adminDto = adminUserService.회원Count();
 		List<Post> readCountRank = adminPostService.readCountRank목록보기();
-		model.addAttribute("adminDto", adminDto).addAttribute("readCountRank", readCountRank);
+		List<Post> updatePost = adminPostService.최근업데이트글();
+		List<Post> likeCountRank = adminPostService.likeCountRank목록보기();
+		model.addAttribute("adminDto", adminDto).addAttribute("readCountRank", readCountRank).addAttribute("updatePost", updatePost)
+			.addAttribute("likeCountRank", likeCountRank);
+		
 
 		return "dashboard";
 	}

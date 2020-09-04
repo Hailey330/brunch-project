@@ -21,6 +21,25 @@
 		limit 5
  	 </select>
  	 
+ 	 <!-- findBylikeCountRank : 포스팅별 좋아요수 랭킹 뿌리기 -->
+  	<select id="findBylikeCountRank" resultType="com.project.brunch.web.dto.admin.AdminDto">
+  		SELECT p.title, u.nickname, l.postId, COUNT(l.postId) AS likeCount, p.createDate
+		FROM postlike l INNER JOIN post p INNER JOIN user u
+		ON p.userid = u.id AND p.Id = l.postId
+		GROUP BY postId
+		ORDER BY likeCount DESC
+		LIMIT 5
+ 	 </select>
+ 	 
+ 	 <!-- 최근업데이트 : admin페이지 최근 업데이트 글 -->
+ 	 <select id="최근업데이트" resultType="com.project.brunch.web.dto.admin.AdminDto">
+  		SELECT p.createDate, p.subtitle, p.title, u.nickname
+		FROM post p INNER JOIN user u
+		ON p.userid = u.id
+		order by p.createDate desc
+		limit 5
+ 	 </select>
+ 	 
  	 <!-- findByDelUserEmail -->
  	<select id="findByDelUserEmail" resultType="com.project.brunch.domain.user.User">
   		SELECT email From user WHERE id = #{id}

@@ -10,6 +10,8 @@ public interface AdminMapper {
 
  	public List<Post> findByTodayPost();
 	public List<Post> findByReadCountRank();
+	public List<Post> findBylikeCountRank();
+	public List<Post> 최근업데이트();
 	public User findByDelUserEmail(int id);
 	public User findByUserEmail(String email);
 

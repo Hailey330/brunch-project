@@ -50,4 +50,17 @@ public class AdminPostService {
 	public List<Post> readCountRank목록보기() {
 		return adminMapper.findByReadCountRank();
 	}
+	
+	// By_아령 : admin 최근 업데이트글
+	@Transactional(readOnly = true)
+	public List<Post> 최근업데이트글() {
+		return adminMapper.최근업데이트();
+	}
+	
+	// By_아령 : 좋아요수 랭크 카운트
+	@Transactional(readOnly = true)
+	public List<Post> likeCountRank목록보기() {
+		
+		return adminMapper.findBylikeCountRank();
+	}
 }

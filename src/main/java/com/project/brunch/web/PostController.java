@@ -34,6 +34,13 @@ public class PostController {
 		postService.글저장(post, loginUser);
 		return "글 저장에 성공했습니다.";
 	}
+	
+	// 작가프로필 page, 해당작가의 글
+	@GetMapping("/post/writerPost/{id}")
+	public List<Post> getProfilePost() {
+		
+		return null;
+	}
 
 	// 작가의 서랍 글 목록 뿌리기
 	@GetMapping("/post/writer")
