@@ -50,7 +50,7 @@ public class PostController {
 	// 포스팅 전체 목록 뿌리기
 	@GetMapping("/post/list")
 	public List<Post> postList() {
-		return postRepository.findAll();
+		return postRepository.findAll(); 
 	}
 
 	// 포스팅 메인 페이지 Dto 뿌리기
