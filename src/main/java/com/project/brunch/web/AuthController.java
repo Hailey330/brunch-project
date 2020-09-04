@@ -1,7 +1,5 @@
 package com.project.brunch.web;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -9,24 +7,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.project.brunch.config.auth.PrincipalDetails;
-import com.project.brunch.domain.post.PostRepository;
-import com.project.brunch.domain.user.UserRepository;
-import com.project.brunch.service.admin.AdminUserService;
 
 import lombok.RequiredArgsConstructor;
 
 @Controller
 @CrossOrigin(origins = "/*")
-@RequestMapping("brunch") // 컨트롤러 진입 주소
-@RequiredArgsConstructor // final과 붙어있는 필드의 생성자를 다 만들어줌
+@RequestMapping("brunch") 
+@RequiredArgsConstructor 
 public class AuthController {
-
-	
-	private static final Logger log = LoggerFactory.getLogger(AuthController.class);
-
-	private final UserRepository userRepository;
-	private final PostRepository postRepository;
-	private final AdminUserService userService;
 	
 	// 모든 사람이 접근 가능
 	@GetMapping("/")
@@ -39,8 +27,6 @@ public class AuthController {
 	public String login() {
 		return "로그인 화면";
 	}
-	
-	
 	
 	// User만 접근가능
 	@GetMapping("/profile")

@@ -22,14 +22,13 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String password;
-	private String snsId; // @앞 아이디 파싱한거
+	private String snsId;
 	private String nickName;
 	private String email;
-	private String bio; 
+	private String bio;
 	private String profileImage;
 	@Enumerated(EnumType.STRING)
 	private UserRole userRole;
 	private String provider;
 	private String providerId;
-
 }
