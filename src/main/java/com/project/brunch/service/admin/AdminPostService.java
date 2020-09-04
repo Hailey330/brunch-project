@@ -10,9 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.project.brunch.domain.admin.AdminMapper;
 import com.project.brunch.domain.post.Post;
-import com.project.brunch.domain.post.PostMapper;
 import com.project.brunch.domain.post.PostRepository;
 import com.project.brunch.domain.user.UserRepository;
+import com.project.brunch.web.dto.admin.AdminDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -47,19 +47,19 @@ public class AdminPostService {
 
 	// By_아령 : 포스팅 카운트
 	@Transactional(readOnly = true)
-	public List<Post> readCountRank목록보기() {
+	public List<AdminDto> readCountRank목록보기() {
 		return adminMapper.findByReadCountRank();
 	}
 	
 	// By_아령 : admin 최근 업데이트글
 	@Transactional(readOnly = true)
-	public List<Post> 최근업데이트글() {
+	public List<AdminDto> 최근업데이트글() {
 		return adminMapper.최근업데이트();
 	}
 	
 	// By_아령 : 좋아요수 랭크 카운트
 	@Transactional(readOnly = true)
-	public List<Post> likeCountRank목록보기() {
+	public List<AdminDto> likeCountRank목록보기() {
 		
 		return adminMapper.findBylikeCountRank();
 	}

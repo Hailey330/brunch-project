@@ -22,7 +22,7 @@ public class AdminDto {
 	private int todayPostCount;
 	
 	private int rank;
-	private int numberCount = getadminDto();
+	private int numberCount;
 	private String nickName;
 	private String title;
 	private int readCount;
@@ -32,13 +32,13 @@ public class AdminDto {
 	private int userId;
 	private int postId;
 	
-	// 수정중
-	public int getadminDto() {
-		int numberCount = this.numberCount;
-		for (int i = 1; i < 6; i++) {
-			numberCount = i;
-			System.out.println(numberCount);
-		}
-		return numberCount;
-	}
+//	// 수정중
+//	public int getadminDto() {
+//		int numberCount = this.numberCount;
+//		for (int i = 1; i < 6; i++) {
+//			numberCount = i;
+//			System.out.println(numberCount);
+//		}
+//		return numberCount;
+//	}
 }

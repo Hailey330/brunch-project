@@ -1,5 +1,6 @@
 package com.project.brunch.web;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -50,9 +51,18 @@ public class AdminController {
 	@GetMapping("/admin")
 	public String adminDashForm(Model model, Model model2) {
 		AdminDto adminDto = adminUserService.회원Count();
-		List<Post> readCountRank = adminPostService.readCountRank목록보기();
-		List<Post> updatePost = adminPostService.최근업데이트글();
-		List<Post> likeCountRank = adminPostService.likeCountRank목록보기();
+		List<AdminDto> readCountRank = adminPostService.readCountRank목록보기();
+		for (int i = 0; i < readCountRank.size(); i++) {
+			readCountRank.get(i).setRank(i+1);
+		}
+		List<AdminDto> updatePost = adminPostService.최근업데이트글();
+		for (int i = 0; i < updatePost.size(); i++) {
+			updatePost.get(i).setRank(i+1);
+		}
+		List<AdminDto> likeCountRank = adminPostService.likeCountRank목록보기();
+		for (int i = 0; i < likeCountRank.size(); i++) {
+			likeCountRank.get(i).setRank(i+1);
+		}
 		model.addAttribute("adminDto", adminDto).addAttribute("readCountRank", readCountRank).addAttribute("updatePost", updatePost)
 			.addAttribute("likeCountRank", likeCountRank);
 		
