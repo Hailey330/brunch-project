@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,26 +31,25 @@ public class UserController {
 	private final UserRepository userRepository;
 	private final UserService userService;
 
-	// 유저 프로필 정보 뿌리기
-	@GetMapping("/user/proflie")
-	public UserProfileRespDto userProfile(@LoginUserAnnotation LoginUser loginUser) {
-		UserProfileRespDto userProfileRespDto = userService.유저프로필(loginUser);
+	// [공통] 유저 프로필 정보 뿌리기
+	@GetMapping("/user/profile/{id}")
+	public UserProfileRespDto userProfile(@PathVariable int id, @LoginUserAnnotation LoginUser loginUser) {
+		UserProfileRespDto userProfileRespDto = userService.유저프로필(id, loginUser);
 		return userProfileRespDto;
 	}
 
 	// 로그인한 유저 정보 뿌리기 (nav bar)
-	@GetMapping("/user/loginUser")
-	public UserNavProfileRespDto userNavProfile(@LoginUserAnnotation LoginUser loginUser) {
-		UserNavProfileRespDto userNavProfileRespDto = userService.로그인유저찾기(loginUser);
-		return userNavProfileRespDto;
-	}
+//	@GetMapping("/user/loginUser")
+//	public UserNavProfileRespDto userNavProfile(@LoginUserAnnotation LoginUser loginUser) {
+//		UserNavProfileRespDto userNavProfileRespDto = userService.로그인유저찾기(loginUser);
+//		return userNavProfileRespDto;
+//	}
 
 	// 로그인한 유저 프로필 업데이트하기
 	@PutMapping("/user/profileEdit")
-	public UserProfileRespDto userProfileEdit(@RequestBody Map<String, Object> data,
-			@LoginUserAnnotation LoginUser loginUser) {
-		UserProfileRespDto userProfileRespDto = userService.프로필수정하기(data, loginUser);
-		return userProfileRespDto;
+	public User userProfileEdit(@RequestBody Map<String, Object> data, @LoginUserAnnotation LoginUser loginUser) {
+		User userEntity = userService.프로필수정하기(data, loginUser);
+		return userEntity;
 	}
 
 	// 전체 유저 목록 뿌리기
