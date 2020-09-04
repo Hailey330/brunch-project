@@ -7,7 +7,11 @@
   
   	<!-- findAllPost : 메인 포스트 목록 뿌리기 -->
 	<select id="findAllPost" resultType="com.project.brunch.web.dto.post.PostRespDto"> 
+<<<<<<< HEAD
 			SELECT p.id, p.title, p.content, p.coverImg, p.createDate, u.nickName FROM post p INNER JOIN user u ON  p.userId=u.id
+=======
+			SELECT * FROM post p INNER JOIN user u ON p.userid = u.id
+>>>>>>> 150eec93ba9ae846440be84c75a8a07265b73c0c
 	</select>
   
 	<update id="updateByPost">
