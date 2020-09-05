@@ -14,6 +14,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 
+// 유저 프로필 
+// 유저가 쓴 글 목록(title, content, coverImg, createDate) + 댓글 수 
 public class UserProfilePostRespDto {
 	List<Post> posts;
 	private int commentCount;

@@ -34,16 +34,16 @@ public class UserController {
 	// [공통] 유저 프로필 정보 뿌리기
 	@GetMapping("/user/profile/{id}")
 	public UserProfileRespDto userProfile(@PathVariable int id, @LoginUserAnnotation LoginUser loginUser) {
-		UserProfileRespDto userProfileRespDto = userService.유저프로필(id, loginUser);
+		UserProfileRespDto userProfileRespDto = userService.메인프로필(id, loginUser);
 		return userProfileRespDto;
 	}
 
-	// 로그인한 유저 정보 뿌리기 (nav bar)
-//	@GetMapping("/user/loginUser")
-//	public UserNavProfileRespDto userNavProfile(@LoginUserAnnotation LoginUser loginUser) {
-//		UserNavProfileRespDto userNavProfileRespDto = userService.로그인유저찾기(loginUser);
-//		return userNavProfileRespDto;
-//	}
+	// [로그인] 유저 정보 뿌리기
+	@GetMapping("/user/loginUser")
+	public UserNavProfileRespDto userNavProfile(@LoginUserAnnotation LoginUser loginUser) {
+		UserNavProfileRespDto userNavProfileRespDto = userService.로그인유저찾기(loginUser);
+		return userNavProfileRespDto;
+	}
 
 	// 로그인한 유저 프로필 업데이트하기
 	@PutMapping("/user/profileEdit")
@@ -57,21 +57,5 @@ public class UserController {
 	public List<User> userList() {
 		return userRepository.findAll();
 	}
-
-//	@PostMapping("/saveadmin")
-//	public String saveAdmin() {
-//		List<User> adminUser = null;
-//		User admin = User.builder()
-//				.email("admin.brunch.co.kr")
-//				.profileImage("https://img1.daumcdn.net/thumb/C500x500.fpng/?fname=http://t1.daumcdn.net/brunch/service/user/2xr/image/lylAHyGq9DgVNt5QFKYhQBIYPko.png")
-//				.nickName("admin")
-//				.userRole(UserRole.ADMIN)
-//				.build();
-//		adminUser.add(admin);
-//		
-//		userRepository.saveAll(adminUser);
-//		
-//		return "어드민 저장완료";
-//	}
 
 }

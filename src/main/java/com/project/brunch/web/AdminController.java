@@ -48,7 +48,7 @@ public class AdminController {
 	}
 
 	// 관리자 메인 대시보드
-	@GetMapping("/admin")
+	@GetMapping("/admin/dash")
 	public String adminDashForm(Model model, Model model2) {
 		AdminDto adminDto = adminUserService.회원Count();
 		List<AdminDto> readCountRank = adminPostService.readCountRank목록보기();
@@ -63,6 +63,7 @@ public class AdminController {
 		for (int i = 0; i < likeCountRank.size(); i++) {
 			likeCountRank.get(i).setRank(i+1);
 		}
+		
 		model.addAttribute("adminDto", adminDto).addAttribute("readCountRank", readCountRank).addAttribute("updatePost", updatePost)
 			.addAttribute("likeCountRank", likeCountRank);
 		

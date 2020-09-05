@@ -34,15 +34,34 @@ public class UserService {
 	private final CommentRepository commentRepository;
 	
 	@Transactional(readOnly = true)
-	public UserProfileRespDto 유저프로필(int id, LoginUser loginUser) {
+	public UserProfilePostRespDto 상세프로필(int id, LoginUser loginUser) {
+		
+		// 유저가 쓴 글 목록 + 글 각각에 달린 댓글 수 
+		
+		// 2-1. 유저가 쓴 글에 달린 댓글 수 가져오기 - 상세 프로필에서 작성 
+//		for (Post post : postEntity) {
+//			commentCount = commentRepository.mCountByComment(post.getId());
+//			System.out.println(post.getId() + "에 달린 댓글 수 : " + commentCount);
+//		}
+//		
+//		UserProfilePostRespDto profilePostEntity = 
+//					UserProfilePostRespDto.builder()
+//						.posts(postEntity)
+//						.commentCount(commentCount)
+//						.build();
+		
+		return null;
+	}
+	
+	@Transactional(readOnly = true)
+	public UserProfileRespDto 메인프로필(int id, LoginUser loginUser) {
 		
 		int followerCount;
 		int followingCount;
 		int postCount;
-		int commentCount;
 		boolean followState;
 		
-		// 1. 로그인 유저찾기
+		// 1. 유저 찾기
 		User userEntity = userRepository.findById(id)
 				.orElseThrow(new Supplier<MyUserIdNotFoundException>() {
 
@@ -55,33 +74,22 @@ public class UserService {
 		// 2. 유저가 쓴 글 목록 가져오기
 		List<Post> postEntity = postRepository.findByUserId(id);
 		
-		// 2-1. 유저가 쓴 글 각각에 달린 댓글 수 가져오기
-//		System.out.println("postEntity postId 확인 : " + postEntity.get(id));
-//		
-//		commentCount = commentRepository.mCountByComment(postEntity.get(id));
-		
-		// 2-2. 유저 프로필에 뿌려지는 글 목록 Dto에 담기
-//		List<UserProfilePostRespDto> profilePostEntity = 
-//				UserProfilePostRespDto.builder()
-//				.posts(postEntity)
-//				.commentCount(commentCount)
-//				.build();
-				
-
 		// 3. 유저가 쓴 글 수 카운트
 		postCount = postEntity.size();
 		
-		// 3. 유저를 구독하고 있는 팔로워 수, 유저가 구독하는 팔로잉 수
+		// 4. 유저를 구독하고 있는 팔로워 수, 유저가 구독하는 팔로잉 수
 		followerCount = followRepository.mCountByFollower(id);
 		followingCount = followRepository.mCountByFollowing(id);
+		System.out.println("유저가 구독하는 작가 수 : " + followerCount);
+		System.out.println("유저를 구독하는 작가 수 : " + followingCount);
 
 		// 5. 팔로우 유무 체크
 		followState = followRepository.mFollowState(loginUser.getId(), id) == 1 ? true : false;
+		System.out.println("팔로우 유무 체크 : " + followState);
 		
 		UserProfileRespDto userProfileRespDto = 
 				UserProfileRespDto.builder()
 				.user(userEntity)
-//				.posts(profilePostEntity)
 				.followerCount(followerCount)
 				.followingCount(followingCount)
 				.followState(followState)
@@ -137,10 +145,11 @@ public class UserService {
 		String nickName = userEntity.getNickName();
 		String profileImage = userEntity.getProfileImage();
 		
-		UserNavProfileRespDto userNavProfileRespDto = UserNavProfileRespDto.builder()
-				.nickName(nickName)
-				.profileImage(profileImage)
-				.build();
+		UserNavProfileRespDto userNavProfileRespDto = 
+				UserNavProfileRespDto.builder()
+					.nickName(nickName)
+					.profileImage(profileImage)
+					.build();
 		
 		return userNavProfileRespDto;
 	}
