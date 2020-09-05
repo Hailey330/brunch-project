@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <title>Brunch Admin</title>
   <!-- plugins:css -->
+  <base href="/">
   <link rel="stylesheet" href="../../assets/vendors/mdi/css/materialdesignicons.min.css" />
   <link rel="stylesheet" href="../../assets/vendors/css/vendor.bundle.base.css" />
   <!-- endinject -->
@@ -260,12 +261,16 @@
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">전체 콘텐츠 관리</h4>
-                  <div class="input-group">
-                    <div class="input-group-prepend bg-transparent">
-                      <i class="input-group-text border-0 mdi mdi-magnify"></i>
-                    </div>
-                    <input type="text" class="form-control bg-transparent border-0" placeholder="Search projects" />
-                  </div>
+                  	<form action="/brunch/admin/post/search" method="GET">
+	                  <div class="input-group">
+	                    <div class="input-group-prepend bg-transparent">
+	                      <button class="input-group-text border-0 mdi mdi-magnify"></button>
+	                    </div>
+	                    	<div>
+	                   		 	<input name="keyword" type="text" class="form-control bg-transparent border-0" placeholder="포스팅 검색하기" />
+	                  		</div>
+	                  </div>
+                 	 </form>
                   <table class="table">
                     <thead>
                       <tr>
@@ -289,15 +294,24 @@
                       </tr>
                     </tbody>
                     {{/posts}}
+                    {{#search}}
+                      <tr>
+                        <td><input id="id" type="hidden" value="{{id}}" />{{id}}</td>
+                        <td>{{userId}}</td>
+                        <td>{{title}}</td>
+                        <td>{{createDate}}</td>
+                        <td><button>블라인드</button></td>
+                        <td><button class="btn-delete">삭제하기</button></td>
+                      </tr>
+                    </tbody>
+                    {{/search}}
                   </table>
                   <div class="template-demo" role="group" aria-label="Basic example"
                     style="display: flex; justify-content: center;">
-                    {{#posts}}
-                    <!-- <button type="button" class="btn btn-gradient-light btn-sm" style><a href="/brunch/admin/post?page={{posts.number}}">{{posts.number}}</a></button> -->
-                    <button type="button" class="btn btn-gradient-light btn-sm" style><a
-                        href="/brunch/admin/post?page={{posts.next}}">{{posts.number}}</a></button>
-
-                    {{/posts}}
+                    <button type="button" class="btn btn-gradient-light btn-sm" style>
+                    <a href="/brunch/admin/post?page=0">1</a></button>
+                    <button type="button" class="btn btn-gradient-light btn-sm" style>
+                    <a href="/brunch/admin/post?page=1">2</a></button>
                   </div>
                 </div>
               </div>

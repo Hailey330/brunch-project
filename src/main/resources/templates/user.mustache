@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Brunch Admin</title>
     <!-- plugins:css -->
+    <base href="/">
     <link rel="stylesheet" href="../../assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="../../assets/vendors/css/vendor.bundle.base.css">
     <!-- endinject -->
@@ -257,13 +258,16 @@
                                 <div class="card-body">
                                     <div class="card-titlecover">
                                         <h4 class="card-title">전체 회원 관리</h4>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend bg-transparent">
-                                                <i class="input-group-text border-0 mdi mdi-magnify"></i>
-                                            </div>
-                                            <input type="text" class="form-control bg-transparent border-0"
-                                                placeholder="Search projects" />
-                                        </div>
+                                        <form action="/brunch/admin/user/search" method="GET">
+						                  <div class="input-group">
+						                    <div class="input-group-prepend bg-transparent">
+						                      <button class="input-group-text border-0 mdi mdi-magnify"></button>
+						                    </div>
+						                    	<div>
+						                   		 	<input name="keyword" type="text" class="form-control bg-transparent border-0" placeholder="회원 검색하기" />
+						                  		</div>
+						                  </div>
+					                 	 </form>
                                     </div>
                                     <table class="table table-striped">
                                         <thead>
@@ -287,6 +291,16 @@
 						                          <td><button class="btn btn-inverse-primary btn-fw" id="delete_{{id}}">삭제</button></td>
 						                     </tr>
                                             {{/users}}
+                                            {{#search}}
+                                            <tr>
+                          						<td><input id="id_{{id}}" type="hidden" value="{{id}}" />{{id}}</td>
+						                          <td>{{snsId}}</td>
+						                          <td>{{nickName}}</td>
+						                          <td>{{email}}</td>
+						                          <td>{{userRole}}</td>
+						                          <td><button class="btn btn-inverse-primary btn-fw" id="delete_{{id}}">삭제</button></td>
+						                     </tr>
+                                            {{/search}}
                                         </tbody>
                                     </table>
                                 </div>

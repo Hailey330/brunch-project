@@ -17,6 +17,7 @@ import com.project.brunch.domain.post.PostRepository;
 import com.project.brunch.domain.user.User;
 import com.project.brunch.domain.user.UserMapper;
 import com.project.brunch.domain.user.UserRepository;
+import com.project.brunch.domain.user.UserRole;
 import com.project.brunch.web.dto.user.UserNavProfileRespDto;
 import com.project.brunch.web.dto.user.UserProfilePostRespDto;
 import com.project.brunch.web.dto.user.UserProfileRespDto;
@@ -144,11 +145,15 @@ public class UserService {
 		// 2. nickName, profileImage 꺼내오기 
 		String nickName = userEntity.getNickName();
 		String profileImage = userEntity.getProfileImage();
+		String bio = userEntity.getBio();
+		String userRole = userEntity.getUserRole().getValue();
 		
 		UserNavProfileRespDto userNavProfileRespDto = 
 				UserNavProfileRespDto.builder()
 					.nickName(nickName)
 					.profileImage(profileImage)
+					.bio(bio)
+					.userRole(userRole)
 					.build();
 		
 		return userNavProfileRespDto;

@@ -1,5 +1,6 @@
 package com.project.brunch.service.admin;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import com.project.brunch.domain.post.PostRepository;
 import com.project.brunch.domain.user.User;
 import com.project.brunch.domain.user.UserRepository;
 import com.project.brunch.web.dto.admin.AdminDto;
+import com.project.brunch.web.dto.admin.AdminSearchDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -68,19 +70,29 @@ public class AdminUserService {
 		return adminDto;
 	}
 
-	@Transactional // user 검색기능 구현중
-	public List<User> searchUsers(String keyword) {
+	@Transactional
+	public List<AdminSearchDto> 유저검색하기(String keyword) {
+		// 1. 검색 키워드 들어간 유저 찾아오기
+		List<User> usersEntity = userRepository.findByNickNameContaining(keyword);
 
-		List<User> userEntities = userRepository.findBynickName(keyword);
-		List<User> userList = userRepository.findAll();
-
-		if (userEntities.isEmpty())
-			return userList;
-
-		for (User user : userEntities) {
-//			userList.add(this.convertEntityToDto(user));
+		List<AdminSearchDto> adminSearchDto = new ArrayList<>();
+		
+		if (usersEntity.isEmpty()) {
+			return adminSearchDto;
 		}
-		return userList;
+		
+		for (User userEntity : usersEntity) {
+			adminSearchDto
+				.add(AdminSearchDto.builder()
+						.id(userEntity.getId())
+						.snsId(userEntity.getSnsId())
+						.nickName(userEntity.getNickName())
+						.email(userEntity.getEmail())
+						.userRole(userEntity.getUserRole().getValue())
+						.keyword(keyword)
+						.build());
+		}
+		return adminSearchDto;
 	}
 
 }

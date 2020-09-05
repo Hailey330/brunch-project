@@ -40,9 +40,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.addFilter(new JwtAuthorizationFilter(authenticationManager(), userRepository))
 			.authorizeRequests()
 			.antMatchers("/user/**")
+//			.authenticated()
 				.access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-			.antMatchers("/admin/**")
-				.access("hasRole('ROLE_ADMIN')")
-			.anyRequest().permitAll();
+//			.antMatchers("/brunch/admin/**")
+//				.access("hasRole('ADMIN') or hasRole('USER')")
+			.anyRequest().permitAll()
+//		.and()
+//			.formLogin()
+//			.loginPage("/brunch/admin")
+//			.loginProcessingUrl("/admin/login")
+//			.defaultSuccessUrl("/admin/dash")
+			;
 	}
 }

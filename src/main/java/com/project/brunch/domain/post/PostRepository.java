@@ -10,7 +10,9 @@ import com.project.brunch.web.dto.user.UserProfilePostRespDto;
 
 public interface PostRepository extends JpaRepository<Post, Integer> {
 
-	public Page<Post> findAll(Pageable pageable); // admin post 페이징 처리
-
 	public List<Post> findByUserId(int id);
+
+	// 관리자
+	public Page<Post> findAll(Pageable pageable); // admin post 페이징 처리
+	public List<Post> findByTitleContaining(String keyword);
 }

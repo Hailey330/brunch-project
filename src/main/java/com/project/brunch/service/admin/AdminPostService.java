@@ -1,10 +1,8 @@
 package com.project.brunch.service.admin;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +11,7 @@ import com.project.brunch.domain.post.Post;
 import com.project.brunch.domain.post.PostRepository;
 import com.project.brunch.domain.user.UserRepository;
 import com.project.brunch.web.dto.admin.AdminDto;
+import com.project.brunch.web.dto.admin.AdminSearchDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -28,14 +27,40 @@ public class AdminPostService {
 	private final int BLOCK_PAGE_NUM_COUNT = 5; // 블럭에 존재하는 페이지 번호 수
 	private final int PAGE_POST_COUNT = 5; // 한 페이지에 존재하는 게시글 수
 
-	// By_민경 : 페이징
 	@Transactional
-	public List<Post> getPostList(Integer pageNum) {
-		Page<Post> page = postRepository
-				.findAll(PageRequest.of(pageNum - 1, PAGE_POST_COUNT, Sort.by(Sort.Direction.DESC, "id")));
-		List<Post> postEntity = page.getContent();
-		return null;
+	public List<AdminSearchDto> 포스팅검색하기(String keyword) {
+		// 1. 검색 키워드 들어간 포스팅 찾아오기
+		List<Post> postsEntity = postRepository.findByTitleContaining(keyword);
+
+		List<AdminSearchDto> adminSearchDto = new ArrayList<>();
+		
+		if (postsEntity.isEmpty()) {
+			return adminSearchDto;
+		}
+		
+		for (Post postEntity : postsEntity) {
+			adminSearchDto
+				.add(AdminSearchDto.builder()
+						.id(postEntity.getId())
+						.userId(postEntity.getUserId())
+						.keyword(keyword)
+						.title(postEntity.getTitle())
+						.createDate(postEntity.getCreateDate().toString())
+						.build());
+		}
+		return adminSearchDto;
 	}
+	
+	
+	
+	// By_민경 : 페이징
+//	@Transactional
+//	public List<Post> getPostList(Integer pageNum) {
+//		Page<Post> page = 
+//				postRepository.findAll(PageRequest.of(pageNum - 1, PAGE_POST_COUNT, Sort.by(Sort.Direction.DESC, "id")));
+//		List<Post> postEntity = page.getContent();
+//		return postEntity;
+//	}
 
 	// By_민경 : 포스팅 삭제하기
 	@Transactional
