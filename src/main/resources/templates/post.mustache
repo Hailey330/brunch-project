@@ -283,17 +283,17 @@
                       </tr>
                     </thead>
                     <tbody>
-                      {{#posts}}
+                      {{#postlist}}
                       <tr>
-                        <td><input id="id" type="hidden" value="{{id}}" />{{id}}</td>
+                        <td><input id="id_{{id}}" type="hidden" value="{{id}}" />{{id}}</td>
                         <td>{{userId}}</td>
                         <td>{{title}}</td>
                         <td>{{createDate}}</td>
                         <td><button>블라인드</button></td>
-                        <td><button class="btn-delete">삭제하기</button></td>
+                        <td><button class="btn btn-inverse-primary btn-fw" id="delete_{{id}}">삭제</button></td>
                       </tr>
                     </tbody>
-                    {{/posts}}
+                    {{/postlist}}
                     {{#search}}
                       <tr>
                         <td><input id="id" type="hidden" value="{{id}}" />{{id}}</td>
@@ -301,17 +301,17 @@
                         <td>{{title}}</td>
                         <td>{{createDate}}</td>
                         <td><button>블라인드</button></td>
-                        <td><button class="btn-delete">삭제하기</button></td>
+                        <td><button class="btn-delete">삭제</button></td>
                       </tr>
                     </tbody>
                     {{/search}}
                   </table>
-                  <div class="template-demo" role="group" aria-label="Basic example"
-                    style="display: flex; justify-content: center;">
-                    <button type="button" class="btn btn-gradient-light btn-sm" style>
-                    <a href="/brunch/admin/post?page=0">1</a></button>
-                    <button type="button" class="btn btn-gradient-light btn-sm" style>
-                    <a href="/brunch/admin/post?page=1">2</a></button>
+                  <div class="template-demo" role="group" aria-label="Basic example" style="display: flex; justify-content: center;">
+                    {{#pagelist}}
+                    <button class="btn btn-gradient-light btn-sm" onclick="location.href='/brunch/admin/post?page={{toString}}'">
+                    	{{toString}}
+                    </button>
+                    {{/pagelist}}
                   </div>
                 </div>
               </div>

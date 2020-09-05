@@ -25,6 +25,7 @@ import com.project.brunch.domain.user.UserRepository;
 import com.project.brunch.service.admin.AdminPostService;
 import com.project.brunch.service.admin.AdminUserService;
 import com.project.brunch.util.GoogleMailSend;
+import com.project.brunch.util.PagingList;
 import com.project.brunch.web.dto.admin.AdminDto;
 import com.project.brunch.web.dto.admin.AdminSearchDto;
 import com.project.brunch.web.dto.post.PostRespDto;
@@ -43,6 +44,7 @@ public class AdminController {
 	private final PostRepository postRepository;
 	private final AdminUserService adminUserService;
 	private final AdminPostService adminPostService;
+	private final PagingList pagingList;
 
 	private PostRespDto postDto;
 	private GoogleMailSend googleMailSend;
@@ -74,18 +76,23 @@ public class AdminController {
 			likeCountRank.get(i).setRank(i + 1);
 		}
 
-		model.addAttribute("adminDto", adminDto).addAttribute("readCountRank", readCountRank)
-				.addAttribute("updatePost", updatePost).addAttribute("likeCountRank", likeCountRank);
+		model.addAttribute("adminDto", adminDto)
+			.addAttribute("readCountRank", readCountRank)
+			.addAttribute("updatePost", updatePost)
+			.addAttribute("likeCountRank", likeCountRank);
 
 		return "dashboard";
 	}
 
-	// 관리자 유저 목록 뿌리기 - 페이징 구현중
+	// 관리자 유저 목록 뿌리기 - 페이징
 	@GetMapping("/admin/user")
-	public String adminUserList(Model model) {
-		List<User> users = userRepository.findAll();
-		model.addAttribute("users", users);
-
+	public String userList(Model model, @RequestParam(value = "page", defaultValue = "1") Integer pageNum) {
+		List<AdminSearchDto> adminSearchDto = adminUserService.유저불러오기(pageNum);
+		Integer[] pageList = pagingList.유저페이지불러오기(pageNum);
+		
+		model.addAttribute("userlist", adminSearchDto);
+		model.addAttribute("pagelist", pageList);
+		
 		return "user";
 	}
 
@@ -102,45 +109,26 @@ public class AdminController {
 	public @ResponseBody int adminUserDelete(@PathVariable int id) {
 		// 이메일 가져오기
 		useremail = adminUserService.이메일찾기(id);
-
 		googleMailSend = new GoogleMailSend();
 		googleMailSend.sendMail(useremail);
 		adminUserService.삭제하기(id);
-
 		return id;
 	}
 
-	// 관리자 포스팅 목록 뿌리기 - 페이징 없음
+	// 관리자 포스팅 목록 뿌리기 - 페이징 
 	@GetMapping("/admin/post")
-	public String testPostForm(Model model) {
-
-		List<Post> posts = postRepository.findAll();
-		model.addAttribute("posts", posts);
-
+	public String postList(Model model, @RequestParam(value = "page", defaultValue = "1") Integer pageNum) {
+		List<AdminSearchDto> adminSearchDto = adminPostService.포스팅불러오기(pageNum);
+		Integer[] pageList = pagingList.포스팅페이지불러오기(pageNum);
+		
+		model.addAttribute("postlist", adminSearchDto);
+		model.addAttribute("pagelist", pageList);
+		
 		return "post";
 	}
-
-	// 관리자 포스팅 목록 뿌리기 - 페이징 구현중
-//	@GetMapping("/admin/post")
-//	public String adminPostList(Model model, @RequestParam(value = "page", defaultValue = "0") Integer pageNum) {
-//		List<Post> postList = adminPostService.getPostList(pageNum);
-//		return "post";
-//	}
-
-	// 페이징 처리 로직 짜는중 1
-//	@GetMapping("/admin/post")
-//	public String postForm(Model model,
-//			@PageableDefault(sort = { "id" }, direction = Direction.DESC, size = 5) Pageable pageable) {
-//		Page<Post> posts = postRepository.findAll(pageable);
-//		model.addAttribute("posts", posts);
-//		System.out.println("getNumber : " + posts.getNumber());
-//		System.out.println("getNumberOfElements()" + posts.getNumber());
-//
-//		return "post";
-//	}
-
+	
 	// 관리자 포스팅 삭제 - 메일 전송 날리기 구현중
-	@DeleteMapping("/admin/post/del/{id}")
+	@DeleteMapping("/admin/post/{id}")
 	public @ResponseBody int adminPostDelete(@PathVariable int id) {
 		adminPostService.delete(id);
 

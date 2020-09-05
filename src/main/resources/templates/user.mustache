@@ -280,8 +280,8 @@
                                                 <th>회원 삭제하기</th>
                                             </tr>
                                         </thead>
+                                           {{#userlist}}
                                         <tbody>
-                                            {{#users}}
                                            	<tr>
                           						<td><input id="id_{{id}}" type="hidden" value="{{id}}" />{{id}}</td>
 						                          <td>{{snsId}}</td>
@@ -290,7 +290,8 @@
 						                          <td>{{userRole}}</td>
 						                          <td><button class="btn btn-inverse-primary btn-fw" id="delete_{{id}}">삭제</button></td>
 						                     </tr>
-                                            {{/users}}
+											</tbody>
+                                         	{{/userlist}}
                                             {{#search}}
                                             <tr>
                           						<td><input id="id_{{id}}" type="hidden" value="{{id}}" />{{id}}</td>
@@ -300,9 +301,16 @@
 						                          <td>{{userRole}}</td>
 						                          <td><button class="btn btn-inverse-primary btn-fw" id="delete_{{id}}">삭제</button></td>
 						                     </tr>
+						                     </tbody>
                                             {{/search}}
-                                        </tbody>
                                     </table>
+                                    <div class="template-demo" role="group" aria-label="Basic example" style="display: flex; justify-content: center;">
+                 					   {{#pagelist}}
+                   						 <button class="btn btn-gradient-light btn-sm" onclick="location.href='/brunch/admin/user?page={{toString}}'">
+                    					{{toString}}
+                   						 </button>
+                    					{{/pagelist}}
+                 					 </div>
                                 </div>
                             </div>
                         </div>

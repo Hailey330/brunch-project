@@ -1,18 +1,20 @@
 let main = {
-   init : function () {
-       $(".btn-delete").on("click", ()=> {
-           this.delete();
+   init : function (e) {
+       $(".btn-inverse-primary").on("click", (e)=> {
+           this.delete(e);
        });
    },
   
-   delete : function () {
+   delete : function (e) {
+	   let checkId = e.target.id.replace("delete_", "");
+
        let data = {
-    		   id : $("#id").val()
+    		   id : $("#id"+ checkId).val()
        };
 
        $.ajax({
            type : "DELETE",
-           url : "/brunch/admin/post/del/"+ data.id,
+           url : "/brunch/admin/post/"+ data.id,
            dataType : "json",
            contentType : "application/json; charset=utf-8"
        }).done(function () {
