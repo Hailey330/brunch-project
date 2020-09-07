@@ -278,43 +278,25 @@
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th>글 번호</th>
+                                                <th>글 제목</th>
                                                 <th>댓글 번호</th>
-                                                <th>회원 아이디</th>
+                                                <th>회원 닉네임</th>
                                                 <th>댓글 내용</th>
                                                 <th>시간</th>
-                                                <th>블라인드 처리하기</th>
                                                 <th>댓글 삭제하기</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                        	{{#comments}}
                                             <tr>
-                                                <td>1</td>
-                                                <td>1</td>
-                                                <td>hongcha</td>
-                                                <td>잘봤습니다~</td>
-                                                <td>20.08.24.18:42:45</td>
-                                                <td><button>블라인드</button></td>
-                                                <td><button>삭제하기</button></td>
+                                                <td>{{title}}</td>
+                                                <td>{{id}}</td>
+                                                <td>{{nickName}}</td>
+                                                <td>{{content}}</td>
+                                                <td>{{createDate}}</td>
+                                                <td><button class="btn btn-inverse-primary btn-fw" id="delete_{{id}}">삭제</button></td>
                                             </tr>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>1</td>
-                                                <td>hongcha</td>
-                                                <td>잘봤습니다~</td>
-                                                <td>20.08.24.18:42:45</td>
-                                                <td><button>블라인드</button></td>
-                                                <td><button>삭제하기</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>1</td>
-                                                <td>hongcha</td>
-                                                <td>잘봤습니다~</td>
-                                                <td>20.08.24.18:42:45</td>
-                                                <td><button>블라인드</button></td>
-                                                <td><button>삭제하기</button></td>
-                                            </tr>
+                                            {{/comments}}
                                         </tbody>
                                     </table>
                                 </div>

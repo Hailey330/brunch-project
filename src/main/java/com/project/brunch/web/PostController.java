@@ -16,6 +16,7 @@ import com.project.brunch.config.auth.dto.LoginUser;
 import com.project.brunch.domain.post.Post;
 import com.project.brunch.domain.post.PostRepository;
 import com.project.brunch.service.PostService;
+import com.project.brunch.web.dto.post.PostRespDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -50,7 +51,9 @@ public class PostController {
 
 	// 태그별 글 목록 뿌리기
 	@GetMapping("/post/list/{tag}")
-	public List<Post> getTagPostList(@PathVariable String tag) {
+	public List<PostRespDto> getTagPostList(@PathVariable String tag) {
+		List<PostRespDto> test =  postService.태그별글목록(tag);
+
 		return postService.태그별글목록(tag);
 	}
 

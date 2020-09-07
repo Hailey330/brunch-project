@@ -9,6 +9,7 @@
     <!-- plugins:css -->
     <link rel="stylesheet" href="../../assets/vendors/mdi/css/materialdesignicons.min.css" />
     <link rel="stylesheet" href="../../assets/vendors/css/vendor.bundle.base.css" />
+    <link rel="stylesheet" type="text/css" href="../../assets/vendors/css/toggle.css" />
     <!-- endinject -->
     <!-- Plugin css for this page -->
     <!-- End plugin css for this page -->
@@ -275,43 +276,34 @@
                                         </div>
                                         <input type="text" class="form-control bg-transparent border-0"
                                             placeholder="Search projects" />
+                                        <button class="btn btn-inverse-primary btn-fw" >메인선택하기</button>
                                     </div>
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th>회원 아이디</th>
-                                                <th>글 번호</th>
+                                                <th>#</th>
                                                 <th>글 제목</th>
+                                                <th>부제목</th>
+                                                <th>닉네임</th>
                                                 <th>시간</th>
-                                                <th>블라인드 처리하기</th>
-                                                <th>포스팅 삭제하기</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td>1</td>
-                                                <td>1</td>
-                                                <td>브런치 글 제목</td>
-                                                <td>포스팅 시간</td>
-                                                <td><button>블라인드</button></td>
-                                                <td><button>삭제하기</button></td>
+		                                    {{#getMainPost}}
+                                                <!--  <td><input type="checkbox" id="mainCheck_{{id}}" name="checkBox" value="false" /></td>-->
+                                                <td>
+	                                                <label class="switch">
+												        <input type="checkbox" id="mainCheck_{{mainPost}}" onclick="toggle(this)" />
+												        <span class="slider round"></span>
+												    </label>
+                                                </td>
+                                                <td>{{title}}</td>
+                                                <td>{{subTitle}}</td>
+                                                <td>{{nickName}}</td>
+                                                <td>{{createDate}}</td>
                                             </tr>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>1</td>
-                                                <td>브런치 글 제목</td>
-                                                <td>포스팅 시간</td>
-                                                <td><button>블라인드</button></td>
-                                                <td><button>삭제하기</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>1</td>
-                                                <td>브런치 글 제목</td>
-                                                <td>포스팅 시간</td>
-                                                <td><button>블라인드</button></td>
-                                                <td><button>삭제하기</button></td>
-                                            </tr>
+                                            {{/getMainPost}}
                                         </tbody>
                                     </table>
                                 </div>
@@ -440,6 +432,7 @@
         <!-- Plugin js for this page -->
         <!-- End plugin js for this page -->
         <!-- inject:js -->
+        <script src="../../assets/js/adminmain.js"></script>
         <script src="../../assets/js/off-canvas.js"></script>
         <script src="../../assets/js/hoverable-collapse.js"></script>
         <script src="../../assets/js/misc.js"></script>

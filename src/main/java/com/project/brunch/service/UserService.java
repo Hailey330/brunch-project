@@ -77,10 +77,12 @@ public class UserService {
 		// 2. nickName, profileImage 꺼내오기 
 		String nickName = userEntity.getNickName();
 		String profileImage = userEntity.getProfileImage();
+		String bio = userEntity.getBio();
 		
 		UserNavProfileRespDto userNavProfileRespDto = UserNavProfileRespDto.builder()
 				.nickName(nickName)
 				.profileImage(profileImage)
+				.bio(bio)
 				.build();
 		
 		return userNavProfileRespDto;

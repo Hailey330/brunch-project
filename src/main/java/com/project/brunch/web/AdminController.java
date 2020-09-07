@@ -1,6 +1,5 @@
 package com.project.brunch.web;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -9,18 +8,22 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.project.brunch.domain.comment.CommentRepository;
 import com.project.brunch.domain.post.Post;
 import com.project.brunch.domain.post.PostRepository;
 import com.project.brunch.domain.user.User;
 import com.project.brunch.domain.user.UserRepository;
+import com.project.brunch.service.admin.AdminCommentService;
 import com.project.brunch.service.admin.AdminPostService;
 import com.project.brunch.service.admin.AdminUserService;
 import com.project.brunch.util.GoogleMailSend;
 import com.project.brunch.web.dto.admin.AdminDto;
+import com.project.brunch.web.dto.admin.CommentDto;
 import com.project.brunch.web.dto.post.PostRespDto;
 
 import lombok.RequiredArgsConstructor;
@@ -33,8 +36,10 @@ public class AdminController {
 
 	private final UserRepository userRepository;
 	private final PostRepository postRepository;
+	private final CommentRepository commentRepository;
 	private final AdminUserService adminUserService;
 	private final AdminPostService adminPostService;
+	private final AdminCommentService adminCommentService;
 
 	private PostRespDto postDto;
 	private GoogleMailSend googleMailSend;
@@ -49,7 +54,7 @@ public class AdminController {
 
 	// 관리자 메인 대시보드
 	@GetMapping("/admin")
-	public String adminDashForm(Model model, Model model2) {
+	public String adminDashForm(Model model) {
 		AdminDto adminDto = adminUserService.회원Count();
 		List<AdminDto> readCountRank = adminPostService.readCountRank목록보기();
 		for (int i = 0; i < readCountRank.size(); i++) {
@@ -68,6 +73,13 @@ public class AdminController {
 		
 
 		return "dashboard";
+	}
+	
+	@PutMapping("/brunch/admin/main/{id}")
+	public List<Post> mainPostUpate(@PathVariable int id) {
+		List<Post> postBoolean = adminPostService.메인포스트값변경하기();
+		
+		return postBoolean;
 	}
 
 	// 관리자 유저 목록 뿌리기 - 페이징 구현중
@@ -139,15 +151,23 @@ public class AdminController {
 		return id;
 	}
 
-	// 관리자 메인 컨트롤 페이지 이동
+	// 관리자 메인 컨트롤 페이지 이동 (메인포스트가져오기)
 	@GetMapping("/admin/main")
-	public String adminMainForm() {
+	public String adminMainForm(Model model) {
+		List<AdminDto> getMainPost = adminPostService.메인포스트가져오기();
+		model.addAttribute("getMainPost", getMainPost);
+		
+		System.out.println("AdminController : mainpost : " + getMainPost);
 		return "main";
 	}
 
 	// 관리자 댓글 컨트롤 페이지 이동
 	@GetMapping("/admin/comment")
-	public String adminCommnetForm() {
+	public String adminCommnetForm(Model model) {
+		
+		List<CommentDto> comments = adminCommentService.getCommentList();
+		model.addAttribute("comments", comments);
+		
 		return "comment";
 	}
 }
