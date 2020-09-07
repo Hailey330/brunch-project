@@ -20,13 +20,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.brunch.domain.post.PostRepository;
-import com.project.brunch.domain.user.MyPage;
 import com.project.brunch.domain.user.User;
 import com.project.brunch.domain.user.UserRepository;
 import com.project.brunch.domain.user.UserRole;
 import com.project.brunch.service.admin.AdminPostService;
 import com.project.brunch.service.admin.AdminUserService;
 import com.project.brunch.util.GoogleMailSend;
+import com.project.brunch.util.MyPage;
 import com.project.brunch.util.PagingList;
 import com.project.brunch.web.dto.admin.AdminDto;
 import com.project.brunch.web.dto.admin.AdminSearchDto;
