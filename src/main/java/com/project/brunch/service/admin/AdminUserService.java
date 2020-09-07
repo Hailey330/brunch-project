@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +32,7 @@ public class AdminUserService {
 	private final int PAGE_POST_COUNT = 8; // 한 페이지에 존재하는 게시글 수
 
 	@Transactional
-	public List<AdminSearchDto> 유저불러오기(Integer pageNum) {
+	public List<AdminSearchDto> 유저불러오기(int pageNum) {
 		Page<User> page = userRepository.findAll(PageRequest.of(pageNum - 1, PAGE_POST_COUNT, Sort.by(Sort.Direction.DESC, "id")));
 		List<User> usersEntity = page.getContent();
 		List<AdminSearchDto> adminSearchDto = new ArrayList<>();
@@ -40,7 +41,6 @@ public class AdminUserService {
 			adminSearchDto
 			.add(AdminSearchDto.builder()
 					.id(userEntity.getId())
-					.snsId(userEntity.getSnsId())
 					.nickName(userEntity.getNickName())
 					.email(userEntity.getEmail())
 					.userRole(userEntity.getUserRole().getValue())

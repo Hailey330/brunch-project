@@ -269,33 +269,32 @@
 						                  </div>
 					                 	 </form>
                                     </div>
-                                    <table class="table table-striped">
+                                    <table class="table">
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>회원 아이디</th>
                                                 <th>회원 이름</th>
                                                 <th>회원 이메일</th>
                                                 <th>등급</th>
                                                 <th>회원 삭제하기</th>
                                             </tr>
                                         </thead>
-                                           {{#userlist}}
+                                           {{#users}}
                                         <tbody>
                                            	<tr>
-                          						<td><input id="id_{{id}}" type="hidden" value="{{id}}" />{{id}}</td>
-						                          <td>{{snsId}}</td>
+                          						<td><input type="checkbox"></td>
+						                          <input id="id_{{id}}" type="hidden" value="{{id}}" />
 						                          <td>{{nickName}}</td>
 						                          <td>{{email}}</td>
 						                          <td>{{userRole}}</td>
 						                          <td><button class="btn btn-inverse-primary btn-fw" id="delete_{{id}}">삭제</button></td>
 						                     </tr>
 											</tbody>
-                                         	{{/userlist}}
+                                         	{{/users}}
                                             {{#search}}
                                             <tr>
-                          						<td><input id="id_{{id}}" type="hidden" value="{{id}}" />{{id}}</td>
-						                          <td>{{snsId}}</td>
+                          						<td><input type="checkbox"></td>
+						                          <input id="id_{{id}}" type="hidden" value="{{id}}" />
 						                          <td>{{nickName}}</td>
 						                          <td>{{email}}</td>
 						                          <td>{{userRole}}</td>
@@ -305,11 +304,11 @@
                                             {{/search}}
                                     </table>
                                     <div class="template-demo" role="group" aria-label="Basic example" style="display: flex; justify-content: center;">
-                 					   {{#pagelist}}
-                   						 <button class="btn btn-gradient-light btn-sm" onclick="location.href='/brunch/admin/user?page={{toString}}'">
-                    					{{toString}}
+                                    {{#lists}}
+                   						 <button class="btn btn-gradient-light btn-sm" onclick="location.href='/brunch/admin/user?page={{num}}'">
+                    					{{num}}
                    						 </button>
-                    					{{/pagelist}}
+                 					 {{/lists}}
                  					 </div>
                                 </div>
                             </div>

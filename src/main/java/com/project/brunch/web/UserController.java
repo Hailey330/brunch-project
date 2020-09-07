@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.brunch.config.auth.LoginUserAnnotation;
 import com.project.brunch.config.auth.dto.LoginUser;
+import com.project.brunch.domain.post.Post;
 import com.project.brunch.domain.user.User;
 import com.project.brunch.domain.user.UserRepository;
+import com.project.brunch.service.PostService;
 import com.project.brunch.service.UserService;
 import com.project.brunch.web.dto.user.UserNavProfileRespDto;
 import com.project.brunch.web.dto.user.UserProfileRespDto;
@@ -30,11 +32,20 @@ public class UserController {
 	private String TAG = "< UserController > ";
 	private final UserRepository userRepository;
 	private final UserService userService;
+	private final PostService postService;
+
+	// [공통] 유저 프로필 정보 뿌리기 - 글 목록 
+	@GetMapping("/user/profile/{id}/posts")
+	public List<Post> userProfilePosts(@PathVariable int id, @LoginUserAnnotation LoginUser loginUser) {
+		List<Post> postEntity = postService.작가의서랍(id);
+		return postEntity;
+	}
 
 	// [공통] 유저 프로필 정보 뿌리기
 	@GetMapping("/user/profile/{id}")
 	public UserProfileRespDto userProfile(@PathVariable int id, @LoginUserAnnotation LoginUser loginUser) {
 		UserProfileRespDto userProfileRespDto = userService.메인프로필(id, loginUser);
+		System.out.println("유저 프로필 정보 확인하기 : " + userProfileRespDto);
 		return userProfileRespDto;
 	}
 

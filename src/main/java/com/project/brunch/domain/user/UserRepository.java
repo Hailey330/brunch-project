@@ -16,4 +16,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	public Page<User> findAll(Pageable pageable); // admin user 페이징 처리
 	public List<User> findByNickNameContaining(String keyword);
 
+	Page<User> findByUserRole(UserRole userRole, Pageable pageable);
+
 }

@@ -1,12 +1,13 @@
 package com.project.brunch.web;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,10 +19,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.project.brunch.domain.post.Post;
 import com.project.brunch.domain.post.PostRepository;
+import com.project.brunch.domain.user.MyPage;
 import com.project.brunch.domain.user.User;
 import com.project.brunch.domain.user.UserRepository;
+import com.project.brunch.domain.user.UserRole;
 import com.project.brunch.service.admin.AdminPostService;
 import com.project.brunch.service.admin.AdminUserService;
 import com.project.brunch.util.GoogleMailSend;
@@ -85,14 +87,30 @@ public class AdminController {
 	}
 
 	// 관리자 유저 목록 뿌리기 - 페이징
+//	@GetMapping("/admin/user")
+//	public String userList(Model model, @RequestParam(value = "page", defaultValue = "1") Integer pageNum) {
+//		List<AdminSearchDto> adminSearchDto = adminUserService.유저불러오기(pageNum);
+//		Integer[] pageList = pagingList.유저페이지불러오기(pageNum);
+//		
+//		model.addAttribute("userlist", adminSearchDto);
+//		model.addAttribute("pagelist", pageList);
+//		
+//		return "user";
+//	}
+	
+	// 유저 페이징 테스트
 	@GetMapping("/admin/user")
-	public String userList(Model model, @RequestParam(value = "page", defaultValue = "1") Integer pageNum) {
-		List<AdminSearchDto> adminSearchDto = adminUserService.유저불러오기(pageNum);
-		Integer[] pageList = pagingList.유저페이지불러오기(pageNum);
-		
-		model.addAttribute("userlist", adminSearchDto);
-		model.addAttribute("pagelist", pageList);
-		
+	public String userListTest(
+			Model model, 
+			@PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+		UserRole userRole = userRepository.findAll().get(0).getUserRole().USER;
+		Page<User> users = userRepository.findByUserRole(userRole, pageable);
+		model.addAttribute("users", users);
+		List<MyPage> lists = new ArrayList<MyPage>();
+		for (int i=1; i<users.getTotalPages(); i++) {
+			lists.add(new MyPage(i));
+		}
+		model.addAttribute("lists", lists);
 		return "user";
 	}
 
