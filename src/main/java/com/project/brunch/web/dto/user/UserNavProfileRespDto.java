@@ -14,8 +14,6 @@ public class UserNavProfileRespDto {
 	private String nickName;
 	private String profileImage;
 	private String bio;
-<<<<<<< HEAD
 	private String userRole;
-=======
->>>>>>> ah-ryeong
+
 }
