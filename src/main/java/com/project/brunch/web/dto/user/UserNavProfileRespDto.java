@@ -13,4 +13,6 @@ import lombok.NoArgsConstructor;
 public class UserNavProfileRespDto {
 	private String nickName;
 	private String profileImage;
+	private String bio;
+	private String userRole;
 }

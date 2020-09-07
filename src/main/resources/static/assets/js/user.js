@@ -10,14 +10,15 @@ let index = { // 삭제하기
 	   console.log(checkId);
 	   
       let data = {
-         id:$("#id_"+checkId).val()
+         id:$("#id_"+ checkId).val()
       };
+      
       $.ajax({
          type:"DELETE",
-         url:"/brunch/admin/user/"+data.id, 
+         url:"/brunch/admin/user/"+ data.id, 
          dataType: "json"// 서버로부터 응답받을 때 데이터 타입
       }).done(function(){ 
-    		 alert("삭제성공");
+    		 alert("회원이 삭제되었습니다.");
     		 location.href="/brunch/admin/user";
       }).fail(function(){ // 실패시 ajax 통신이 안된 것
          console.log(error);   

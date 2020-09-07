@@ -3,6 +3,12 @@ package com.project.brunch.web;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,28 +19,34 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.project.brunch.domain.post.Post;
 import com.project.brunch.domain.post.PostRepository;
+import com.project.brunch.domain.user.MyPage;
 import com.project.brunch.domain.user.User;
 import com.project.brunch.domain.user.UserRepository;
+import com.project.brunch.domain.user.UserRole;
 import com.project.brunch.service.admin.AdminPostService;
 import com.project.brunch.service.admin.AdminUserService;
 import com.project.brunch.util.GoogleMailSend;
+import com.project.brunch.util.PagingList;
 import com.project.brunch.web.dto.admin.AdminDto;
+import com.project.brunch.web.dto.admin.AdminSearchDto;
 import com.project.brunch.web.dto.post.PostRespDto;
 
 import lombok.RequiredArgsConstructor;
 
 @Controller
 @CrossOrigin(origins = "/*")
-@RequestMapping("brunch") 
-@RequiredArgsConstructor 
+@RequestMapping("brunch")
+@RequiredArgsConstructor
 public class AdminController {
+
+	private static final Logger log = LoggerFactory.getLogger(AdminController.class);
 
 	private final UserRepository userRepository;
 	private final PostRepository postRepository;
 	private final AdminUserService adminUserService;
 	private final AdminPostService adminPostService;
+	private final PagingList pagingList;
 
 	private PostRespDto postDto;
 	private GoogleMailSend googleMailSend;
@@ -43,48 +55,70 @@ public class AdminController {
 	// 관리자 로그인
 	@GetMapping("/admin/login")
 	public String adminLoginForm() {
-
+		log.info("/admin/loginForm 진입");
 		return "login";
 	}
 
 	// 관리자 메인 대시보드
 	@GetMapping("/admin")
 	public String adminDashForm(Model model, Model model2) {
+		log.info("/admin/dashForm 진입");
+
 		AdminDto adminDto = adminUserService.회원Count();
 		List<AdminDto> readCountRank = adminPostService.readCountRank목록보기();
 		for (int i = 0; i < readCountRank.size(); i++) {
-			readCountRank.get(i).setRank(i+1);
+			readCountRank.get(i).setRank(i + 1);
 		}
 		List<AdminDto> updatePost = adminPostService.최근업데이트글();
 		for (int i = 0; i < updatePost.size(); i++) {
-			updatePost.get(i).setRank(i+1);
+			updatePost.get(i).setRank(i + 1);
 		}
 		List<AdminDto> likeCountRank = adminPostService.likeCountRank목록보기();
 		for (int i = 0; i < likeCountRank.size(); i++) {
-			likeCountRank.get(i).setRank(i+1);
+			likeCountRank.get(i).setRank(i + 1);
 		}
-		model.addAttribute("adminDto", adminDto).addAttribute("readCountRank", readCountRank).addAttribute("updatePost", updatePost)
+
+		model.addAttribute("adminDto", adminDto)
+			.addAttribute("readCountRank", readCountRank)
+			.addAttribute("updatePost", updatePost)
 			.addAttribute("likeCountRank", likeCountRank);
-		
 
 		return "dashboard";
 	}
 
-	// 관리자 유저 목록 뿌리기 - 페이징 구현중
+	// 관리자 유저 목록 뿌리기 - 페이징
+//	@GetMapping("/admin/user")
+//	public String userList(Model model, @RequestParam(value = "page", defaultValue = "1") Integer pageNum) {
+//		List<AdminSearchDto> adminSearchDto = adminUserService.유저불러오기(pageNum);
+//		Integer[] pageList = pagingList.유저페이지불러오기(pageNum);
+//		
+//		model.addAttribute("userlist", adminSearchDto);
+//		model.addAttribute("pagelist", pageList);
+//		
+//		return "user";
+//	}
+	
+	// 유저 페이징 테스트
 	@GetMapping("/admin/user")
-	public String adminUserList(Model model) {
-		List<User> users = userRepository.findAll();
+	public String userListTest(
+			Model model, 
+			@PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+		UserRole userRole = userRepository.findAll().get(0).getUserRole().USER;
+		Page<User> users = userRepository.findByUserRole(userRole, pageable);
 		model.addAttribute("users", users);
-
+		List<MyPage> lists = new ArrayList<MyPage>();
+		for (int i=1; i<users.getTotalPages(); i++) {
+			lists.add(new MyPage(i));
+		}
+		model.addAttribute("lists", lists);
 		return "user";
 	}
 
 	// 관리자 유저 목록 검색하기
 	@GetMapping("/admin/user/search")
-	public String adminUserSearch(@RequestParam(value = "keyword") String keyword, Model model) {
-		List<User> userList = adminUserService.searchUsers(keyword);
-		model.addAttribute("userList", userList);
-
+	public String adminUserSearch(@RequestParam(value="keyword") String keyword, Model model) {
+		List<AdminSearchDto> adminSearchDto = adminUserService.유저검색하기(keyword);
+		model.addAttribute("search", adminSearchDto);
 		return "user";
 	}
 
@@ -93,52 +127,40 @@ public class AdminController {
 	public @ResponseBody int adminUserDelete(@PathVariable int id) {
 		// 이메일 가져오기
 		useremail = adminUserService.이메일찾기(id);
-
 		googleMailSend = new GoogleMailSend();
 		googleMailSend.sendMail(useremail);
 		adminUserService.삭제하기(id);
-
 		return id;
 	}
 
-	// 관리자 포스팅 목록 뿌리기 - 페이징 없음
+	// 관리자 포스팅 목록 뿌리기 - 페이징 
 	@GetMapping("/admin/post")
-	public String testPostForm(Model model) {
-
-		List<Post> posts = postRepository.findAll();
-		model.addAttribute("posts", posts);
-
+	public String postList(Model model, @RequestParam(value = "page", defaultValue = "1") Integer pageNum) {
+		List<AdminSearchDto> adminSearchDto = adminPostService.포스팅불러오기(pageNum);
+		Integer[] pageList = pagingList.포스팅페이지불러오기(pageNum);
+		
+		model.addAttribute("postlist", adminSearchDto);
+		model.addAttribute("pagelist", pageList);
+		
 		return "post";
 	}
 	
-	// 관리자 포스팅 목록 뿌리기 - 페이징 구현중
-	//	@GetMapping("/admin/post")
-	//	public String adminPostList(Model model, @RequestParam(value = "page", defaultValue = "1") Integer pageNum) {
-	//		List<Post> postList = adminPostService.getPostList(pageNum);
-	//		return "post";
-	//	}
-	
-	//	페이징 처리 로직 짜는중 1
-	//	@GetMapping("/admin/post")
-	//	public String postForm(Model model, @PageableDefault(sort= {"id"}, direction = Direction.DESC, size = 5) Pageable pageable) {
-	//		
-	//		Page<Post> posts = postRepository.findAll(pageable);
-	//		model.addAttribute("posts", posts);
-	//		System.out.println("getNumber()"+posts.getNumber());
-	//		System.out.println("getNumberOfElements()"+posts.getNumberOfElements());
-	//
-	//		
-	//		return "post";
-	//	}
-	
 	// 관리자 포스팅 삭제 - 메일 전송 날리기 구현중
-	@DeleteMapping("/admin/post/del/{id}")
+	@DeleteMapping("/admin/post/{id}")
 	public @ResponseBody int adminPostDelete(@PathVariable int id) {
 		adminPostService.delete(id);
 
 		return id;
 	}
 
+	// 관리자 포스팅 검색하기
+	@GetMapping("/admin/post/search")
+	public String adminPostSearch(@RequestParam(value="keyword") String keyword, Model model) {
+		List<AdminSearchDto> adminSearchDto = adminPostService.포스팅검색하기(keyword);
+		model.addAttribute("search", adminSearchDto);
+		return "post";
+	}
+	
 	// 관리자 메인 컨트롤 페이지 이동
 	@GetMapping("/admin/main")
 	public String adminMainForm() {

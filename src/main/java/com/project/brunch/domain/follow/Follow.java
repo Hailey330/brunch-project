@@ -19,6 +19,6 @@ public class Follow {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private String fromUserId; // fromUserId로부터
-	private String toUserId; // toUserId로 팔로우한다
+	private int fromUserId; // fromUserId로부터
+	private int toUserId; // toUserId로 팔로우한다
 }
