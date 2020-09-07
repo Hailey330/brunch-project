@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.project.brunch.domain.comment.CommentMapper">
+  
+  	<!-- findByComment : 댓글 뿌리기 -->
+  	<select id="findByComment" resultType="com.project.brunch.domain.comment.Comment">
+  		SELECT u.nickname, u.profileimage, c.content, c.createDate
+		FROM comment c INNER JOIN user u INNER JOIN post p
+		ON c.userId = u.id and c.postId = p.id
+		WHERE c.postId=#{postId}
+  	</select>  
+</mapper>

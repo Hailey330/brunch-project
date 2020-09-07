@@ -20,25 +20,20 @@ public class AdminDto {
 	private int allUserCount;
 	private int allPostCount;
 	private int todayPostCount;
+	private boolean mainControll;
 	
 	private int rank;
 	private int numberCount;
 	private String nickName;
 	private String title;
+	private String subTitle;
 	private int readCount;
 	private Timestamp createDate;
+	private boolean mainPost;
 	
 	private int likeCount;
 	private int userId;
 	private int postId;
+	private int id;
 	
-//	// 수정중
-//	public int getadminDto() {
-//		int numberCount = this.numberCount;
-//		for (int i = 1; i < 6; i++) {
-//			numberCount = i;
-//			System.out.println(numberCount);
-//		}
-//		return numberCount;
-//	}
 }

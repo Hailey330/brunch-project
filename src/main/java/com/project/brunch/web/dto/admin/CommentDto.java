@@ -1,4 +1,4 @@
-package com.project.brunch.web.dto.user;
+package com.project.brunch.web.dto.admin;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,13 +9,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+public class CommentDto {
 
-public class UserNavProfileRespDto {
+	private String title;
+	private int id;
 	private String nickName;
-	private String profileImage;
-	private String bio;
-<<<<<<< HEAD
-	private String userRole;
-=======
->>>>>>> ah-ryeong
+	private String createDate;
+	private String content;
+	
 }

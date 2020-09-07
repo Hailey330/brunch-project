@@ -40,6 +40,13 @@
 		limit 5
  	 </select>
  	 
+ 	 <!-- 관리자메인 : 메인 포스트 가져오기 -->
+ 	 <select id="메인포스트가져오기" resultType="com.project.brunch.web.dto.admin.AdminDto">
+  		SELECT p.createDate, p.subtitle, p.title, u.nickname, p.mainPost
+		FROM post p INNER JOIN user u
+		ON p.userid = u.id
+ 	 </select>
+ 	 
  	 <!-- findByDelUserEmail -->
  	<select id="findByDelUserEmail" resultType="com.project.brunch.domain.user.User">
   		SELECT email From user WHERE id = #{id}
@@ -48,7 +55,19 @@
   	<select id="findByUserEmail" resultType="com.project.brunch.domain.user.User">
   		SELECT * FROM user WHERE email =#{email}
  	</select>
+ 	
+ 	<!-- 어드민 댓글 리스트 불러오기 -->
+ 	<select id="CommentList" resultType="com.project.brunch.web.dto.admin.CommentDto">
+  		SELECT p.title, c.id, c.createDate, c.content, u.nickName
+		FROM comment c INNER JOIN user u INNER JOIN post p
+		ON c.userId = u.id AND c.postId = p.id
+		ORDER BY p.id DESC
+ 	</select>
   
-  
+    <!-- 메인포스트값변경하기 : true, false -->
+  	<update id="메인포스트값변경하기">
+  		UPDATE post SET mainPost = #{mainPost}
+  		WHERE id =#{id}
+ 	</update>
   
 </mapper>

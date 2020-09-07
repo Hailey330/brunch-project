@@ -35,6 +35,8 @@ public class Post {
 	private String coverImg; // 메인에 뿌려질 img 1개만 넣은거
 	private String postType; // 메거진, 에세이
 	private int readCount;
+	private boolean mainPost;
+	
 	@CreationTimestamp
 	private Timestamp createDate;
 }

@@ -146,6 +146,7 @@ public class UserService {
 		String nickName = userEntity.getNickName();
 		String profileImage = userEntity.getProfileImage();
 		String bio = userEntity.getBio();
+<<<<<<< HEAD
 		String userRole = userEntity.getUserRole().getValue();
 		
 		UserNavProfileRespDto userNavProfileRespDto = 
@@ -155,6 +156,14 @@ public class UserService {
 					.bio(bio)
 					.userRole(userRole)
 					.build();
+=======
+		
+		UserNavProfileRespDto userNavProfileRespDto = UserNavProfileRespDto.builder()
+				.nickName(nickName)
+				.profileImage(profileImage)
+				.bio(bio)
+				.build();
+>>>>>>> ah-ryeong
 		
 		return userNavProfileRespDto;
 	}
