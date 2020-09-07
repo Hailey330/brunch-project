@@ -96,4 +96,17 @@ public class AdminPostService {
 	public List<AdminDto> likeCountRank목록보기() {
 		return adminMapper.findBylikeCountRank();
 	}
+	
+	// By_아령 : 관리자메인 포스트리스트
+	@Transactional(readOnly = true)
+	public List<AdminDto> 메인포스트가져오기() {
+		
+		return adminMapper.메인포스트가져오기();
+	}
+	
+	@Transactional(readOnly = true)
+	public List<Post> 메인포스트값변경하기() {
+		
+		return adminMapper.메인포스트값변경하기();
+	}
 }

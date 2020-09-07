@@ -38,6 +38,7 @@ public class GoogleMailSend {
 		// 메일에 출력할 텍스트 
 		StringBuffer sb = new StringBuffer();
 		sb.append("<h3>안녕하세요 Brunch입니다.</h3>");
+		sb.append("<h4>회원님께서는 Brunch 규정을 위반하셨기 때문에 아이디가 정지되었습니다.</h4>");
 		String html = sb.toString();
 		
 		// 메일 옵션 설정

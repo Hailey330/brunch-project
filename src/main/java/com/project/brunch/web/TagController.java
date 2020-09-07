@@ -25,6 +25,7 @@ public class TagController {
 	// 태그 불러오기 - 전체 태그 목록
 	@GetMapping("/tag/list")
 	public List<Tag> tagList() {
+		List<Tag> test = tagRepository.findAll();
 		return tagRepository.findAll();
 	}
 

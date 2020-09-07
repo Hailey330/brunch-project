@@ -9,6 +9,7 @@ import com.project.brunch.config.auth.dto.LoginUser;
 import com.project.brunch.domain.post.Post;
 import com.project.brunch.domain.post.PostMapper;
 import com.project.brunch.domain.post.PostRepository;
+import com.project.brunch.web.dto.post.PostRespDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -28,6 +29,7 @@ public class PostService {
 				.subTitle(post.getSubTitle())
 				.title(post.getTitle())
 				.userId(loginUser.getId())
+				.mainPost(false)
 				.build();
 		
 		postRepository.save(savePost);
@@ -39,7 +41,7 @@ public class PostService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<Post> 태그별글목록(String tag) {
+	public List<PostRespDto> 태그별글목록(String tag) {
 		return postMapper.findBy태그(tag);
 	}
 

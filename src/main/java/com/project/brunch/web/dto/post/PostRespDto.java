@@ -1,7 +1,5 @@
 package com.project.brunch.web.dto.post;
 
-import java.security.Timestamp;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +14,10 @@ public class PostRespDto {
 	private int id;
 	private String title;
 	private String content;
+	private String subTitle;
 	private String nickName;
 	private String coverImg;
-	private Timestamp createDate;
+	private String profileImage;
+	private String tag;
+	private String createDate;
 }
