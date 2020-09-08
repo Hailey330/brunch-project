@@ -16,5 +16,6 @@ public class CommentDto {
 	private String nickName;
 	private String createDate;
 	private String content;
+	private String profileImage;
 	
 }

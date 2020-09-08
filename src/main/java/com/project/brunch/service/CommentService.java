@@ -10,6 +10,7 @@ import com.project.brunch.domain.comment.Comment;
 import com.project.brunch.domain.comment.CommentMapper;
 import com.project.brunch.domain.comment.CommentRepository;
 import com.project.brunch.domain.post.Post;
+import com.project.brunch.web.dto.admin.CommentDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -36,7 +37,7 @@ public class CommentService {
 	
 	// By_아령
 	@Transactional(readOnly = true)
-	public List<Comment> 댓글뿌리기( int postId) {
+	public List<CommentDto> 댓글뿌리기( int postId) {
 
 		return commentMapper.findByComment( postId);
 	}

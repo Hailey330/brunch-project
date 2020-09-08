@@ -15,6 +15,7 @@ import com.project.brunch.config.auth.LoginUserAnnotation;
 import com.project.brunch.config.auth.dto.LoginUser;
 import com.project.brunch.domain.comment.Comment;
 import com.project.brunch.service.CommentService;
+import com.project.brunch.web.dto.admin.CommentDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -28,7 +29,7 @@ public class CommentController {
 	
 	// 댓글 뿌리기 
 	@GetMapping("/post/comment/{postId}")
-	public List<Comment> getComment(@PathVariable int postId) {
+	public List<CommentDto> getComment(@PathVariable int postId) {
 
 		return commentService.댓글뿌리기( postId);
 	}

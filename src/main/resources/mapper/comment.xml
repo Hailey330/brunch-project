@@ -6,7 +6,7 @@
 <mapper namespace="com.project.brunch.domain.comment.CommentMapper">
   
   	<!-- findByComment : 댓글 뿌리기 -->
-  	<select id="findByComment" resultType="com.project.brunch.domain.comment.Comment">
+  	<select id="findByComment" resultType="com.project.brunch.web.dto.admin.CommentDto">
   		SELECT u.nickname, u.profileimage, c.content, c.createDate
 		FROM comment c INNER JOIN user u INNER JOIN post p
 		ON c.userId = u.id and c.postId = p.id

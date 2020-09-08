@@ -2,7 +2,7 @@ package com.project.brunch.util;
 
 import java.util.Date;
 import java.util.Properties;
- 
+
 import javax.activation.CommandMap;
 import javax.activation.MailcapCommandMap;
 import javax.mail.Authenticator;
@@ -16,9 +16,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-import javax.mail.internet.MimeUtility;
-
-import com.project.brunch.service.admin.AdminUserService;
 
 public class GoogleMailSend {
 	

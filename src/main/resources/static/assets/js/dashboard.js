@@ -479,9 +479,9 @@
     
         // These labels appear in the legend and in the tooltips when hovering different arcs
         labels: [
-          '태그1',
-          '태그2',
-          '태그3',
+          'IT트렌드',
+          '우리집반려동물',
+          '문화예술',
         ]
       };
       var trafficChartOptions = {
