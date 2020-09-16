@@ -1,5 +1,6 @@
 package com.project.brunch.web;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +30,7 @@ import com.project.brunch.domain.user.UserRole;
 import com.project.brunch.service.admin.AdminCommentService;
 import com.project.brunch.service.admin.AdminPostService;
 import com.project.brunch.service.admin.AdminUserService;
+import com.project.brunch.service.crawling.user.NowCrawling;
 import com.project.brunch.util.GoogleMailSend;
 import com.project.brunch.util.MyPage;
 import com.project.brunch.util.PagingList;
@@ -193,4 +195,17 @@ public class AdminController {
 		
 		return "comment";
 	}
+	
+	@GetMapping("/save")
+	   public @ResponseBody String userSave(NowCrawling nowCrawling) {
+	      List<User> users;
+	      try {
+	         users = nowCrawling.getNowCrawling();
+	         userRepository.saveAll(users);
+	         return "크롤링 유저 저장완료";
+	      } catch (IOException e) {
+	         e.printStackTrace();
+	      }
+	      return null;
+	   }
 }

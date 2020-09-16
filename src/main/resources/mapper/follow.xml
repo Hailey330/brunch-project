@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.project.brunch.domain.follow.FollowMapper">
+ 
+  	<!-- findFollowingList : 팔로잉 리스트 뿌리기 -->
+	<select id="findFollowerList" resultType="com.project.brunch.web.dto.follow.FollowRespDto"> 
+			SELECT u.id, u.nickName, u.bio, u.profileImage, 
+			IF(u.id = #{loginUserId}, true, false) equalUserState, 
+			IF((SELECT true FROM follow WHERE fromUserId = #{loginUserId} and toUserId = u.id), true, false) as followState 
+			FROM follow f inner join user u on f.toUserId = u.id and f.fromUserId = #{pageUserId};
+	</select>
+	
+  	<!-- findFollowerList : 팔로워 리스트 뿌리기 -->
+	<select id="findFollowingList" resultType="com.project.brunch.web.dto.follow.FollowRespDto"> 
+			SELECT u.id, u.nickName, u.bio, u.profileImage, 
+			IF(u.id = #{loginUserId}, true, false) equalUserState, 
+			IF((SELECT true FROM follow WHERE fromUserId = #{loginUserId} and toUserId = u.id), true, false) as followState 
+			FROM follow f inner join user u on f.toUserId = u.id and f.toUserId = #{pageUserId};
+	</select>
+  
+</mapper>

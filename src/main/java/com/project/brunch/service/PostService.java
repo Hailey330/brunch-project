@@ -29,7 +29,6 @@ public class PostService {
 				.subTitle(post.getSubTitle())
 				.title(post.getTitle())
 				.userId(loginUser.getId())
-				.mainPost(false)
 				.build();
 		
 		postRepository.save(savePost);

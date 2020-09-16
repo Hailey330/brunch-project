@@ -30,7 +30,6 @@ public class CommentController {
 	// 댓글 뿌리기 
 	@GetMapping("/post/comment/{postId}")
 	public List<CommentDto> getComment(@PathVariable int postId) {
-
 		return commentService.댓글뿌리기( postId);
 	}
 	

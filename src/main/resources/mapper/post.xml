@@ -11,7 +11,7 @@
 	</select>
   
 	<update id="updateByPost">
-		SELECT coverImg FROM post WEHRE id=#{id}
+		SELECT coverImg FROM post WHERE id=#{id}
 	</update>
 	
 	<!-- findBy작가의서랍 : 작가의 서랍 목록 뿌리기 -->
